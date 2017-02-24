@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Trucks
 {
+    //class containing truck name and specifications, also containing method to calculate volume of truck
+
     class Truck
     {
         public string name;    // truck name
@@ -33,6 +35,7 @@ namespace Trucks
             engine_power = 625;
         }
 
+        // A parameterized constructor
         public Truck(string n, double l, double h, double w, int s, int gears, int hp)
         {
             name = n;
@@ -45,11 +48,15 @@ namespace Trucks
         }
     }
 
+    //class containing method collecting objects of Truck class in array and storing the real amount of used cells of array
     class TruckCollection
     {
+        //array storing object of truck class
         public Truck[] truck_collection = new Truck[4];
+        //integer to count actual(not empty) cells of array
         public int collection_length;
 
+        //add new object to collection and count it number
         public void AddNew(Truck name)
         {
             truck_collection[collection_length++] = name;
@@ -64,8 +71,10 @@ namespace Trucks
         {
             TruckCollection TrucksArray = new TruckCollection();
 
+            //simple constructor in use 
             Truck KenworthW900 = new Truck();
             TrucksArray.AddNew(KenworthW900);
+            //parameterized constructor in use
             Truck Iveco_HighWay = new Truck("Iveco High-Way", 4, 4, 4, 100, 11, 400);
             TrucksArray.AddNew(Iveco_HighWay);
             Truck DAF_XF = new Truck("DAF XF", 3, 3, 3, 105, 9, 380);
@@ -73,7 +82,7 @@ namespace Trucks
             Truck MercedesBenz_Actros = new Truck("Mercedes Benz", 3, 3, 3, 110, 10, 500);
             TrucksArray.AddNew(MercedesBenz_Actros);
 
-
+            //outputing trucks information using our array with instances of truck class
             foreach (Truck i in TrucksArray.truck_collection)
             {
                 Console.WriteLine("Name of the truck: " + i.name +
