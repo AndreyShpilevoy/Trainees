@@ -56,9 +56,9 @@ namespace Truck
 			Console.WriteLine("Model   \tLength\tHeight\tWidth\tMaxSp\tPower\tNuOfG\tVehicle Volume");
 			foreach (var truck in truckArray)
 			{
-				Console.Write(truck.Model + "\t" + truck.Length + "\t" + truck.Height + "\t" +
-				              truck.Width + "\t" + truck.MaxSpeed + "\t" + truck.Power + "\t" +
-				              truck.NumberOfGears + "\t" + truck.VehicleVolume() + "\t\n\n");
+				Console.Write(truck.Model + "\t" + truck.Length + "m\t" + truck.Height + "m\t" +
+				              truck.Width + "m\t" + truck.MaxSpeed + "km/h\t" + truck.Power + "hp\t" +
+				              truck.NumberOfGears + "\t" + truck.VehicleVolume() + "m^3\t\n\n");
 			}
 		}
 	}
