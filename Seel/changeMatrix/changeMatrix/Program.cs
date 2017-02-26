@@ -149,35 +149,6 @@ namespace changeMatrix
             static void Main()
             {
                 new UserControl();
-                /*
-                            var newMatrix = new Matrix(4);
-                            newMatrix.DisplayMatrix();
-                            newMatrix.ChangeColumn(3);
-                            newMatrix.DisplayMatrix();
-                            newMatrix.ChangeColumn(5,3);
-                            newMatrix.DisplayMatrix();
-                            newMatrix.Rotate();
-                            newMatrix.DisplayMatrix();
-                            newMatrix.ChangeColumn(1, 4);
-                            newMatrix.DisplayMatrix();
-                            newMatrix.UserControl();
-
-                /*
-
-                /*          Example working with square matrix of custom size (7)
-
-                            var newMatrix = new Matrix(7);
-                            newMatrix.DisplayMatrix();
-                            newMatrix.ChangeColumn(3);
-                            newMatrix.DisplayMatrix();
-                            newMatrix.ChangeColumn(4,5);
-                            newMatrix.DisplayMatrix();
-                            newMatrix.Rotate();
-                            newMatrix.DisplayMatrix();
-                            newMatrix.ChangeColumn(5, 3);
-                            newMatrix.DisplayMatrix();
-
-                */
             }
         }
     }
