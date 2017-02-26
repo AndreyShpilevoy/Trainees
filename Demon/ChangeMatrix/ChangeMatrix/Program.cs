@@ -34,7 +34,8 @@ namespace ChangeMatrix
             {
                 for (int i = 0; i < j; i++)
                 {
-                    privateMatrix[j, i] = privateMatrix[i, j];
+                    int rotate = privateMatrix[i, j];
+                    privateMatrix[j, 3-i] = privateMatrix[i, j];
                 }
             }
 
@@ -78,7 +79,7 @@ namespace ChangeMatrix
 
             //Rotate matrix
             Console.WriteLine("\nRotate matrix? yes/no");
-            string answer = Console.ReadLine();
+            string answer = Console.ReadLine().ToLower();
             switch (answer)
             {
                 case "yes":
