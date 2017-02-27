@@ -1,132 +1,102 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SnailMatrix
 {
-    class Matrix
-    {
-        private int[,] privateMatrix;
+	class Matrix
+	{
+		private int[,] privateMatrix;
 
-        public Matrix()   //create matrix (MEGA CRUTCH)
-        {
-            int someValue = 10;
-            int count = 5;
-            privateMatrix = new int[6, 6];
+		public Matrix() //create matrix (MEGA CRUTCH)
+		{
+			var initialValue = 10;
+			privateMatrix = new int[6, 6];
 
-            for (count = 5; count >= 0; count--)    //column 5
-            {
-                for (int i = 5; i >= 0; i--)
-                {
-                    privateMatrix[i, count] = someValue++;
-                }
-                break;
-            }
+			//column 5
+			for (var i = 5; i >= 0; i--)
+			{
+				privateMatrix[i, 5] = initialValue++;
+			}
 
-            for (int i = 0; i < 1;)                 //string 0
-            {
-                for (count = 4; count >= 0; count--)
-                {
-                    privateMatrix[i, count] = someValue++;
-                }
-                break;
-            }
+			//row 0
+			for (var count = 4; count >= 0; count--)
+			{
+				privateMatrix[0, count] = initialValue++;
+			}
 
-            for (count = 0; count <= 0;)            //column 0
-            {
-                for (int i = 1; i <= 5; i++)
-                {
-                    privateMatrix[i, count] = someValue++;
-                }
-                break;
-            }
+			//column 0
+			for (var i = 1; i <= 5; i++)
+			{
+				privateMatrix[i, 0] = initialValue++;
+			}
 
-            for (int i = 5; i < 6;)                //string 5
-            {
-                for (count = 1; count < 5; count++)
-                {
-                    privateMatrix[i, count] = someValue++;
-                }
-                break;
-            }
 
-            for (count = 4; count > 0;)             //column 4
-            {
-                for (int i = 4; i > 0; i--)
-                {
-                    privateMatrix[i, count] = someValue++;
-                }
-                break;
-            }
+			//row 5
+			for (var count = 1; count < 5; count++)
+			{
+				privateMatrix[5, count] = initialValue++;
+			}
 
-            for (int i = 1; i < 2;)                 //string 1
-            {
-                for (count = 3; count > 0; count--)
-                {
-                    privateMatrix[i, count] = someValue++;
-                }
-                break;
-            }
 
-            for (count = 1; count > 0;)             //column 1
-            {
-                for (int i = 2; i <= 4; i++)
-                {
-                    privateMatrix[i, count] = someValue++;
-                }
-                break;
-            }
+			//column 4
+			for (var i = 4; i > 0; i--)
+			{
+				privateMatrix[i, 4] = initialValue++;
+			}
 
-            for (int i = 4; i > 2;)                     //string 4
-            {
-                for (count = 2; count < 4; count++)
-                {
-                    privateMatrix[i, count] = someValue++;
-                }
-                break;
-            }
+			//row 1
+			for (var count = 3; count > 0; count--)
+			{
+				privateMatrix[1, count] = initialValue++;
+			}
 
-            for (count = 3; count > 0;)                 //column 3
-            {
-                for (int i = 3; i >= 2; i--)
-                {
-                    privateMatrix[i, count] = someValue++;
-                }
-                break;
-            }
 
-            for (count = 2; count > 0;)                 //column 2
-            {
-                for (int i = 2; i <4; i++)
-                {
-                    privateMatrix[i, count] = someValue++;
-                }
-                break;
-            }
-            }
-            
-            public void MatrixShow()     //Matrix show
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    for (int j = 0; j < 6; j++)
-                {
-                    Console.Write( privateMatrix[i,j] + " ");
-                }
-                Console.WriteLine();
-            }
-        }
+			//column 1
+			for (var i = 2; i <= 4; i++)
+			{
+				privateMatrix[i, 1] = initialValue++;
+			}
 
-        class User
-        {
-            static void Main()
-            {
-                Matrix newMatrix = new Matrix();
-                newMatrix.MatrixShow();
-            }
-        }
 
-    }
+			//row 4
+			for (var count = 2; count < 4; count++)
+			{
+				privateMatrix[4, count] = initialValue++;
+			}
+
+
+			//column 3
+			for (var i = 3; i >= 2; i--)
+			{
+				privateMatrix[i, 3] = initialValue++;
+			}
+
+			//column/row 2
+			for (var i = 2; i < 4; i++)
+			{
+				privateMatrix[i, 2] = initialValue++;
+			}
+
+		}
+
+		public void MatrixShow() //Matrix show
+		{
+			for (var i = 0; i < 6; i++)
+			{
+				for (var j = 0; j < 6; j++)
+				{
+					Console.Write(privateMatrix[i, j] + " ");
+				}
+				Console.WriteLine();
+			}
+		}
+	}
+
+	class User
+	{
+		static void Main()
+		{
+			Matrix newMatrix = new Matrix();
+			newMatrix.MatrixShow();
+		}
+	}
 }
