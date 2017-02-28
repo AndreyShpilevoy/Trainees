@@ -2,55 +2,76 @@
 
 namespace FizzBuzz
 {
-    class FizzBuzz
-    {
-        static void Main()
-        {
-            int minNumber;
-            int maxNumber;
-            string answer = string.Empty;
+	class FizzBuzz
+	{
+		static void Main()
+		{
+			var answer = string.Empty;
 
-            while (answer != "exit")
-            {
-                Console.WriteLine("Input start number:");
-                if (Int32.TryParse(Console.ReadLine(), out minNumber))
-                {
-                    Console.WriteLine("Input finish number:");
-                    if (Int32.TryParse(Console.ReadLine(), out maxNumber))
-                    {
-                        for (int i = minNumber; i <= maxNumber && maxNumber!=minNumber; i++)
-                        {
-                            if (i % 3 == 0 && i % 5 == 0)
-                            {
-                                Console.WriteLine("FizzBuzz");
-                            }
+			while (answer != "N")
+			{
+				Console.WriteLine("Input start number:");
+				int minNumber;
+				var minNumberValid = Int32.TryParse(Console.ReadLine(), out minNumber);
 
-                            if (i % 3 == 0 && i % 5 != 0)
-                            {
-                                Console.WriteLine("Fizz");
-                            }
+				Console.WriteLine("Input finish number:");
+				int maxNumber;
+				var maxNumberValid = Int32.TryParse(Console.ReadLine(), out maxNumber);
 
-                            if (i % 3 != 0 && i % 5 == 0)
-                            {
-                                Console.WriteLine("Buzz");
-                            }
+				if (Validate(minNumberValid, maxNumberValid, minNumber, maxNumber))
+				{
+					if (minNumber > maxNumber)
+					{
+						Swap(ref minNumber, ref maxNumber);
+					}
 
-                            if (i % 3 != 0 && i % 5 != 0)
-                            {
-                                Console.WriteLine(i);
-                            }
-                        }
-                    }
+					for (var i = minNumber; i <= maxNumber; i++)
+					{
+						Console.WriteLine(GetConditionResult(i));
+					}
+				}
+				else
+				{
+					Console.WriteLine("Error! Entered value is wrong.");
+				}
 
-                    if (maxNumber == minNumber | maxNumber<minNumber)
-                    {
-                        Console.WriteLine("Error! Start number can`t be equal or more than finish number.");
-                    }
-                }
+				Console.WriteLine("\nDo you want to continue work with app. Y/N.");
+				answer = Console.ReadLine().ToUpperInvariant();
+			}
+		}
 
-                Console.WriteLine("\n" + @"To exit programm enter ""exit"" or press any key to continue.");
-                answer = Console.ReadLine();
-            }
-        }
-    }     
+		private static bool Validate(bool minNumberValid, bool maxNumberValid, int minNumber, int maxNumber)
+		{
+			return minNumberValid && maxNumberValid && maxNumber != minNumber;
+		}
+
+		private static void Swap(ref int min, ref int max)
+		{
+			min = min + max;
+			max = min - max;
+			min = min - max;
+		}
+
+		private static string GetConditionResult(int i)
+		{
+			string result;
+			if (i % 15 == 0)
+			{
+				result = "FizzBuzz";
+			}
+			else if (i % 3 == 0)
+			{
+				result = "Fizz";
+			}
+			else if (i % 5 == 0)
+			{
+				result = "Buzz";
+			}
+			else
+			{
+				result = i.ToString();
+			}
+			return result;
+		}
+	}
 }
