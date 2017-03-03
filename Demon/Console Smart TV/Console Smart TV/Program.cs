@@ -123,14 +123,18 @@ namespace Console_Smart_TV
 											{
 												Console.WriteLine("\nVolume: " + volumeSettings.volumeLevel + "\nEnter volume from 0 to 100");
 												var volumeValid = Int32.TryParse(Console.ReadLine(), out volumeSettings.volumeLevel);
-												if (VolumeValidate(volumeValid, volumeSettings.volumeLevel))
+
+												while (volumeSettingsNumber != 2)
 												{
-													Console.WriteLine("\nVolume: " + volumeSettings.volumeLevel + "\n\n1.For set new volume level enter \"1\"\n2.For return to sound settings enter \"2\"");
-													var volumeSettingsValid = Int32.TryParse(Console.ReadLine(), out volumeSettingsNumber);
-												}
-												else
-												{
-													Console.WriteLine("Error.Incorrect volume. Please try again");
+													if (VolumeValidate(volumeValid, volumeSettings.volumeLevel))
+													{
+														Console.WriteLine("\nVolume: " + volumeSettings.volumeLevel + "\n\n1.For set new volume level enter \"1\"\n2.For return to sound settings enter \"2\"");
+														var volumeSettingsValid = Int32.TryParse(Console.ReadLine(), out volumeSettingsNumber);
+													}
+													else
+													{
+														Console.WriteLine("Error.Incorrect volume. Please try again");
+													}
 												}
 											}
 											volumeSettingsNumber = 0;
@@ -152,6 +156,7 @@ namespace Console_Smart_TV
 										}
 								}
 							}
+							Console.Clear();
 							volumeSettings.soundSettingsNumber = 0;
 							break;
 						}
@@ -163,7 +168,7 @@ namespace Console_Smart_TV
 							User newUser = new User();
 							while (userDataNumber != 5)
 							{
-								Console.WriteLine("\n\tUser data settings");
+								Console.WriteLine("\n\n\tUser data settings");
 								//newUser.ShowUserNameMask();
 								//newUser.ShowUserEmail();
 								Console.WriteLine("1.For edit you name enter \"1\"\n2.For edit your email enter \"2\"" +
@@ -189,22 +194,26 @@ namespace Console_Smart_TV
 
 												else
 												{
-													newUser.SaveUserName = userNameInput;
-													int index;
-													index = userNameInput.IndexOf(" ");
-													if (index >= 0)
+													while (userNameNumber != 2)
 													{
-														newUser.ShowUserNameMask();
-														Console.WriteLine("\n1.For set new user name enter \"1\"\n2.For return to user data settings enter \"2\"");
-														var nameChangeValid = Int32.TryParse(Console.ReadLine(), out userNameNumber);
-													}
+														newUser.SaveUserName = userNameInput;
+														int index;
+														index = userNameInput.IndexOf(" ");
+														if (index >= 0)
+														{
+															newUser.ShowUserNameMask();
+															Console.WriteLine("\n1.For set new user name enter \"1\"\n2.For return to user data settings enter \"2\"");
+															var nameChangeValid = Int32.TryParse(Console.ReadLine(), out userNameNumber);
+														}
 
-													else
-													{
-														Console.WriteLine("\nError.Please enter your surname");
+														else
+														{
+															Console.WriteLine("\nError.Please enter your surname");
+														}
 													}
 												}
 											}
+											Console.Clear();
 											userNameNumber = 0;
 											break;
 										}
@@ -217,23 +226,26 @@ namespace Console_Smart_TV
 												Console.WriteLine("\nEnter your email");
 												userEmailInput = Console.ReadLine();
 
-
-												newUser.SaveUserEmail = userEmailInput;
-												int index;
-												index = userEmailInput.IndexOf("@");
-												if (index >= 0 && userEmailInput.Length > 1)
+												while (userEmailNumber != 2)
 												{
-													newUser.ShowUserEmailMask();
-													Console.WriteLine("\n1.For set new user email enter \"1\"\n2.For return to user data settings enter \"2\"");
-													var nameChangeValid = Int32.TryParse(Console.ReadLine(), out userEmailNumber);
-												}
+													newUser.SaveUserEmail = userEmailInput;
+													int index;
+													index = userEmailInput.IndexOf("@");
+													if (index >= 0 && userEmailInput.Length > 1)
+													{
+														newUser.ShowUserEmailMask();
+														Console.WriteLine("\n1.For set new user email enter \"1\"\n2.For return to user data settings enter \"2\"");
+														var nameChangeValid = Int32.TryParse(Console.ReadLine(), out userEmailNumber);
+													}
 
-												else
-												{
-													Console.WriteLine("\nError.Please enter correct email");
+													else
+													{
+														Console.WriteLine("\nError.Please enter correct email");
+													}
 												}
 
 											}
+											Console.Clear();
 											userEmailNumber = 0;
 											break;
 										}
