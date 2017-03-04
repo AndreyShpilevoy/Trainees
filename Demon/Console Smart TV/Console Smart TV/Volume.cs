@@ -8,7 +8,6 @@ namespace Console_Smart_TV
 		public int muteSound;
 		public int soundSettingsNumber;
 		public int muteSoundValue;
-		bool volumeValid;
 
 		public Volume()
 		{
@@ -25,7 +24,7 @@ namespace Console_Smart_TV
 
 		public bool SetVolume()
 		{
-			return volumeValid = Int32.TryParse(Console.ReadLine(), out volumeLevel);
+			return Int32.TryParse(Console.ReadLine(), out volumeLevel);
 		}
 
 		public void Swap(ref int volume, ref int mute)
