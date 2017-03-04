@@ -2,162 +2,87 @@
 
 namespace Console_Smart_TV
 {
-	class Volume
-	{
-		public int volumeLevel;
-		public int muteSound;
-		public int soundSettingsNumber;
-		public int muteSoundValue;
-
-		public Volume()
-		{
-			volumeLevel = 0;
-			muteSound = 0;
-			soundSettingsNumber = 0;
-			muteSoundValue = 0;
-		}
-
-	}
-
-	class User
-	{
-		private string UserName;
-		private string UserEmail;
-
-		public User()
-		{
-			UserName = "Unknown";
-			UserEmail = "Unknown";
-		}
-
-		public string SaveUserName
-		{
-			set
-			{
-				UserName=value;
-			}
-		}
-
-		public string SaveUserEmail
-		{
-			set
-			{
-				UserEmail=value;
-			}
-		}
-
-		public void ShowUserNameMask()
-		{
-			int index;
-			index = UserName.IndexOf(" ");
-			Console.Write("\nUser name: ");
-			for (int i = 0; i <= index + 1; i++)
-			{
-				Console.Write(UserName[i]);
-			}
-			Console.Write(".");
-
-		}
-
-		public void ShowUserEmailMask()
-		{
-			int index;
-			index = UserEmail.IndexOf("@");
-			Console.Write("\nUser email: ");
-			for (int i = 0; i <= 2; i++)
-			{
-				Console.Write(UserEmail[i]);
-			}
-
-			for (int i = 3; i < index; i++)
-			{
-				Console.Write("*");
-			}
-			Console.Write("@");
-
-			for (int i = index + 1; i < UserEmail.Length - 3; i++)
-			{
-				Console.Write("*");
-			}
-			for (int i = UserEmail.Length - 3; i < UserEmail.Length; i++)
-			{
-				Console.Write(UserEmail[i]);
-			}
-		}
-	}
 	class Program
 	{
-
 		static void Main()
 		{
 			var mainMenuNumber = 0;
 			var volumeSettingsNumber = 0;
+			var volumeSettingsMenuNumber = 0;
 			var userDataNumber = 0;
 			var userNameNumber = 0;
 			var userEmailNumber = 0;
 
-			Volume volumeSettings = new Volume();
+			Volume newVolume = new Volume();
 
 			//main menu
 			while (mainMenuNumber != 3)
 			{
-				Console.WriteLine("\t Main menu\n1.For sound settings menu enter \"1\"\n2.For manage user data enter \"2\"\n3.Type \"3\" to exit the program\n");
+				Console.WriteLine("\t Main menu\n1.For sound settings menu enter \"1\""
+					+ "\n2.For manage user data enter \"2\"\n3.Type \"3\" to exit the program\n");
 				var mainMenuNumberValid = Int32.TryParse(Console.ReadLine(), out mainMenuNumber);
+				Console.Clear();
 
 				switch (mainMenuNumber)
 				{
 					case 1:
 						{
 							//sound settings menu
-							while (volumeSettings.soundSettingsNumber != 3)
+							while (volumeSettingsMenuNumber != 3)
 							{
-								Console.WriteLine("\n\tSound settings menu\n1.For set volume level enter \"1\"\n2.For mute sound enter \"2\"\n3.For return to main menu emter \"3\"\n");
-								var soundSettingsValid = Int32.TryParse(Console.ReadLine(), out volumeSettings.soundSettingsNumber);
+								Console.WriteLine("\tSound settings menu\n1.For set volume level enter \"1\""
+									+ "\n2.For mute sound enter \"2\"\n3.For return to main menu emter \"3\"\n");
+								var soundSettingsValid = Int32.TryParse(Console.ReadLine(), out volumeSettingsMenuNumber);
 
-								switch (volumeSettings.soundSettingsNumber)
+								switch (volumeSettingsMenuNumber)
 								{
 									case 1:
 										{
 											//set volume
+											
 											while (volumeSettingsNumber != 2)
 											{
-												Console.WriteLine("\nVolume: " + volumeSettings.volumeLevel + "\nEnter volume from 0 to 100");
-												var volumeValid = Int32.TryParse(Console.ReadLine(), out volumeSettings.volumeLevel);
 
-												while (volumeSettingsNumber != 2)
+												Console.WriteLine("\nVolume: " + newVolume.volumeLevel +
+																"\nEnter volume from 0 to 100");
+
+												if (newVolume.VolumeValidate(newVolume.SetVolume(), newVolume.volumeLevel))
 												{
-													if (VolumeValidate(volumeValid, volumeSettings.volumeLevel))
-													{
-														Console.WriteLine("\nVolume: " + volumeSettings.volumeLevel + "\n\n1.For set new volume level enter \"1\"\n2.For return to sound settings enter \"2\"");
-														var volumeSettingsValid = Int32.TryParse(Console.ReadLine(), out volumeSettingsNumber);
-													}
-													else
-													{
-														Console.WriteLine("Error.Incorrect volume. Please try again");
-													}
+													Console.Clear();
+													Console.WriteLine("\nVolume: " + newVolume.volumeLevel +
+														"\n\n1.For set new volume level enter \"1\"" +
+														"\n2.For return to sound settings enter \"2\"");
+													var volumeSettingsValid = Int32.TryParse(Console.ReadLine(), out volumeSettingsNumber);
+												}
+												else
+												{
+													newVolume.volumeLevel = 0;
+													Console.WriteLine("Error.Incorrect volume. Please try again");
 												}
 											}
+											Console.Clear();
 											volumeSettingsNumber = 0;
 											break;
 										}
 
 									case 2:
 										{
-											Swap(ref volumeSettings.volumeLevel, ref volumeSettings.muteSound);
-											if (volumeSettings.volumeLevel == 0)
+											Console.Clear();
+											newVolume.Swap(ref newVolume.volumeLevel, ref newVolume.muteSound);
+											if (newVolume.volumeLevel == 0)
 											{
 												Console.WriteLine("sound mute");
 											}
 											else
 											{
-												Console.WriteLine("Sound: " + volumeSettings.volumeLevel);
+												Console.WriteLine("Sound: " + newVolume.volumeLevel);
 											}
 											break;
 										}
 								}
 							}
 							Console.Clear();
-							volumeSettings.soundSettingsNumber = 0;
+							volumeSettingsMenuNumber = 0;
 							break;
 						}
 
@@ -168,11 +93,10 @@ namespace Console_Smart_TV
 							User newUser = new User();
 							while (userDataNumber != 5)
 							{
-								Console.WriteLine("\n\n\tUser data settings");
-								//newUser.ShowUserNameMask();
-								//newUser.ShowUserEmail();
-								Console.WriteLine("1.For edit you name enter \"1\"\n2.For edit your email enter \"2\"" +
-									"\n3.For show user name enter \"3\"\n4.For show user email enter \"4\"\n5.For return to main menu enter \"5\"\n");
+								Console.WriteLine("\tUser data settings");
+								Console.WriteLine("1.For enter you name enter \"1\"\n2.For enter your email enter \"2\"" +
+									"\n3.For show user name enter \"3\"\n4.For show user email enter \"4\""
+									+ "\n5.For return to main menu enter \"5\"\n");
 								var userDataValid = Int32.TryParse(Console.ReadLine(), out userDataNumber);
 
 								switch (userDataNumber)
@@ -181,35 +105,30 @@ namespace Console_Smart_TV
 										{
 											while (userNameNumber != 2)
 											{
-												int temp;
-												string userNameInput;
 												Console.WriteLine("\nEnter your first name and surname");
-												userNameInput = Console.ReadLine();
-												var userNameValid = Int32.TryParse(userNameInput, out temp);
+												newUser.userNameInput = Console.ReadLine();
 
-												if (userNameValid)
+												if (newUser.UserNameValidate())
 												{
-													Console.WriteLine("Name can not contain numbers. Please try again");
+													Console.Clear();
+													Console.WriteLine("Please enter correct user name and surname");
 												}
 
 												else
 												{
-													while (userNameNumber != 2)
+													if (newUser.UserNameInput() > 0)
 													{
-														newUser.SaveUserName = userNameInput;
-														int index;
-														index = userNameInput.IndexOf(" ");
-														if (index >= 0)
-														{
-															newUser.ShowUserNameMask();
-															Console.WriteLine("\n1.For set new user name enter \"1\"\n2.For return to user data settings enter \"2\"");
-															var nameChangeValid = Int32.TryParse(Console.ReadLine(), out userNameNumber);
-														}
+														Console.Clear();
+														newUser.SaveUserName = newUser.userNameInput;
+														newUser.ShowUserNameMask();
+														Console.WriteLine("\n1.For set new user name enter \"1\""
+															+ "\n2.For return to user data settings enter \"2\"");
+														var nameChangeValid = Int32.TryParse(Console.ReadLine(), out userNameNumber);
+													}
 
-														else
-														{
-															Console.WriteLine("\nError.Please enter your surname");
-														}
+													else
+													{
+														Console.WriteLine("\nError.Please enter your surname");
 													}
 												}
 											}
@@ -222,28 +141,23 @@ namespace Console_Smart_TV
 										{
 											while (userEmailNumber != 2)
 											{
-												string userEmailInput;
 												Console.WriteLine("\nEnter your email");
-												userEmailInput = Console.ReadLine();
+												newUser.userEmailInput = Console.ReadLine();
 
-												while (userEmailNumber != 2)
+												if (newUser.UserEmailValidate())
 												{
-													newUser.SaveUserEmail = userEmailInput;
-													int index;
-													index = userEmailInput.IndexOf("@");
-													if (index >= 0 && userEmailInput.Length > 1)
-													{
-														newUser.ShowUserEmailMask();
-														Console.WriteLine("\n1.For set new user email enter \"1\"\n2.For return to user data settings enter \"2\"");
-														var nameChangeValid = Int32.TryParse(Console.ReadLine(), out userEmailNumber);
-													}
-
-													else
-													{
-														Console.WriteLine("\nError.Please enter correct email");
-													}
+													Console.WriteLine("\nError.Please enter correct email");
+													
 												}
 
+												else
+												{
+													newUser.SaveUserEmail = newUser.userEmailInput;
+													newUser.ShowUserEmailMask();
+													Console.WriteLine("\n1.For set new user email enter \"1\""
+														+ "\n2.For return to user data settings enter \"2\"");
+													var nameChangeValid = Int32.TryParse(Console.ReadLine(), out userEmailNumber);
+												}
 											}
 											Console.Clear();
 											userEmailNumber = 0;
@@ -252,17 +166,38 @@ namespace Console_Smart_TV
 
 									case 3:
 										{
-											newUser.ShowUserNameMask();
+											Console.Clear();
+											if (newUser.UserNameCompare())
+											{
+												Console.WriteLine("User name: Unknown. Please enter user name");
+											}
+
+											else
+											{
+												newUser.ShowUserNameMask();
+												Console.WriteLine();
+											}
 											break;
 										}
 
 									case 4:
 										{
-											newUser.ShowUserEmailMask();
+											Console.Clear();
+											if (newUser.UserEmailCOmpare())
+											{
+												Console.WriteLine("User email: Unknown. Please enter user email");
+											}
+
+											else
+											{
+												newUser.ShowUserEmailMask();
+												Console.WriteLine();
+											}
 											break;
 										}
 								}
 							}
+							Console.Clear();
 							userDataNumber = 0;
 						}
 						mainMenuNumber = 0;
@@ -270,21 +205,7 @@ namespace Console_Smart_TV
 				}
 			}
 		}
-
-		//Volume level validate
-		private static bool VolumeValidate(bool volumeValid, int volumeLevel)
-		{
-			return volumeValid && volumeLevel >= 0 && volumeLevel <= 100;
-		}
-
-		private static void Swap(ref int volume, ref int mute)
-		{
-			volume = volume + mute;
-			mute = volume - mute;
-			volume = volume - mute;
-		}
-
 	}
 }
-
+//111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 
