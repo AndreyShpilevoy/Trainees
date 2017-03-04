@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Figures.Base
+﻿namespace Figures.Models
 {
 	abstract class Figure
 	{

@@ -2,33 +2,33 @@
 
 abstract class Figure
 {
-	double width;
-	double height;
-	string name;
+	double _width;
+	double _height;
 
 	public Figure()
 	{
-		width = height = 0.0;
-		name = "null";
+		_width = 0.0;
+		_height = 0.0;
+		Name = String.Empty;
 	}
 
-	public Figure (double w, double h, string n)
+	public Figure(double w, double h, string n)
 	{
-		width = w;
-		height = h;
-		name = n;
+		_width = w;
+		_height = h;
+		Name = n;
 	}
 
 	public double Width
 	{
 		get
 		{
-			return width;
+			return _width;
 		}
 
 		set
 		{
-			width = value < 0 ? -value : value;
+			_width = value < 0 ? -value : value;
 		}
 	}
 
@@ -36,27 +36,16 @@ abstract class Figure
 	{
 		get
 		{
-			return height;
+			return _height;
 		}
 
 		set
 		{
-			height = value < 0 ? -value : value;
+			_height = value < 0 ? -value : value;
 		}
 	}
 
-	public string Name
-	{
-		get
-		{
-			return name;
-		}
-
-		set
-		{
-			name = value;
-		}
-	}
+	public string Name { get; set; }
 
 	public abstract double Area();
 

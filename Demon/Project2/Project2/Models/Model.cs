@@ -2,11 +2,8 @@
 
 class Square:Figure
 {
-	public Square(double width, double height, string name)
+	public Square(double side, string name): base(side, side,name)
 	{
-		Width = width;
-		Height = height;
-		Name = name;
 	}
 
 	public override double Area()
@@ -20,41 +17,38 @@ class Square:Figure
 	}
 	public override void GetInfo()
 	{
-		Console.WriteLine("\nName: "+Name+"\nWidth: "+Width+"\nHeight: "+Height);
+		Console.WriteLine("\nName: "+Name+"\nSide: "+Width);
 	}
 }
 
 class Circle : Figure
 {
 	public double radius;
-	public double diameter;
 
 	public Circle()
 	{
 		radius = 0.0;
-		diameter = 0.0;
 	}
 
-	public Circle(double radiusCircle, double diameterCircle,string nameCircle)
+	public Circle(double radiusCircle, string nameCircle):base(radiusCircle * 2, radiusCircle * 2, nameCircle)
 	{
 		radius = radiusCircle;
-		diameter = diameterCircle;
 		Name = nameCircle;
 	}
 
 	public override double Area()
 	{
-		return 3.14 * radius*radius;
+		return Math.PI * Math.Pow(radius, 2);
 	}
 
 	public double Perimeter()
 	{
-		return 2 * 3.14 * radius;
+		return 2 * Math.PI * radius;
 	}
 
 	public override void GetInfo()
 	{
-		Console.WriteLine("\nName: " + Name + "\nRadius: " + radius + "\nDiameter: " + diameter);
+		Console.WriteLine("\nName: " + Name + "\nRadius: " + radius + "\nDiameter: " + radius*2);
 	}
 }
 
@@ -137,13 +131,13 @@ class Programm
 	{
 		Figure[] figure = new Figure[4];
 
-		figure [0] = new Square(6.2, 6.2, "Square");
-		figure[1] = new Circle(2.3, 4.6, "Circle");
+		figure [0] = new Square(6.2, "Square");
+		figure[1] = new Circle(2.3, "Circle");
 		figure[2] = new Rhombus(2.67, 2.67, 4.9, 2.1, "rhombus");
 		figure[3] = new Triangle(6.7, 6.7, 9.4, 4.77, "triangle");
 
-		Square square = new Square(6.2, 6.2, "Square");
-		Circle circle = new Circle(2.3, 4.6, "Circle");
+		Square square = new Square(6.2, "Square");
+		Circle circle = new Circle(2.3, "Circle");
 		Rhombus rhombus = new Rhombus(2.67, 2.67, 4.9, 2.1, "rhombus");
 		Triangle triangle = new Triangle(6.7, 6.7, 9.4, 4.77, "triangle");
 
@@ -157,5 +151,9 @@ class Programm
 		Console.WriteLine("Circle perimeter: " + circle.Perimeter());
 		Console.WriteLine("Rhombus perimeter: " + rhombus.Perimeter());
 		Console.WriteLine("Triangle perimeter: " + triangle.Perimeter());
+
+
+
+		Console.WriteLine("Circle Width: " + circle.Width);
 	}
 }

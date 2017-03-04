@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace Figures.Base
+namespace Figures.Models
 {
 	class Square : Figure 
 	{
-		public Square(double input)
+		public Square(double input):base(input)
 		{
-			a = input;
 		}
 
 		public new double Area
@@ -23,9 +22,8 @@ namespace Figures.Base
 
 	class Circle : Figure
 	{
-		public Circle(double input)
+		public Circle(double input) : base(input)
 		{
-			a = input;
 		}
 
 		public new double Area
@@ -43,9 +41,8 @@ namespace Figures.Base
 	class Rectangle : Figure
 	{
 		double b;
-		public Rectangle(double inputA, double inputB)
+		public Rectangle(double inputA, double inputB) : base(inputA)
 		{
-			a = inputA;
 			b = inputB;
 		}
 
