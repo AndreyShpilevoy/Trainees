@@ -4,62 +4,60 @@ namespace NotVerySmartTV
 {
 	class VolumeControl
 	{
-		int mutedLevel = -1;
-		int level;
+		int _mutedLevel;
+		int _level;
 
 		public VolumeControl()
 		{
-			level = 10;
+			_mutedLevel = -1;
+			_level = 10;
 		}
 
-		public int MyLevel
+		public int Level
 		{
 			get
 			{
-				return level;
+				return _level;
 			}
 			set
 			{
 				if (value >= 0 && value <= 100)
 				{
-					level = value;
+					_level = value;
 				}
 				else
 				{
-					level = (value < 0) ? 0 : 100;
+					_level = value < 0 ? 0 : 100;
 				}
 			}
 		}
 
-		public string Set()
+		public string SetLevel()
 		{
 			int input;
 			while (Int32.TryParse(Console.ReadLine(), out input) != true)
 			{
 				return "Error. Please use number from 1 to 100 to set volume level.";
 			}
-			this.MyLevel = input;
+			Level = input;
 			return null;
 		}
 
 		public void Mute()
 		{
-
-			if (level != 0)
+			if (_level == 0)
 			{
-				mutedLevel = this.MyLevel;
-				this.MyLevel = 0;
+				Level = _mutedLevel == -1 ? 0 : _mutedLevel;
+				if (_mutedLevel != -1)
+				{
+					_mutedLevel = Level;
+				}
 			}
 			else
 			{
-				this.MyLevel = (mutedLevel != -1 ? mutedLevel : 0);
-				mutedLevel = (mutedLevel != -1) ? this.MyLevel : -1;
+				_mutedLevel = Level;
+				Level = 0;
 			}
-		}
-
-		public int ShowLevel()
-		{
-			return level;
 		}
 	}
 }

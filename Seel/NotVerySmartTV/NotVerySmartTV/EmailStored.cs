@@ -1,56 +1,61 @@
 ﻿using System;
+using System.Text;
 
 namespace NotVerySmartTV
 {
 	class EmailStored
 	{
-		string email;
-		public string emailHidden;
+		private string _email;
+		private string _maskedEmail;
 
 		public EmailStored()
 		{
-			email = String.Empty;
-			emailHidden = String.Empty;
+			_email = String.Empty;
+			_maskedEmail = String.Empty;
 		}
 
-		public string Set()
+		public string MaskedEmail
+		{
+			get {
+				return String.IsNullOrWhiteSpace(_maskedEmail) ? "\nPlease set email first.\n" : _maskedEmail;
+			}
+		}
+
+		public string SetEmail(string incomingEmail)
 		{
 			string result = String.Empty;
-			emailHidden = String.Empty;
-			email = Console.ReadLine();
-			while (email.IndexOf("@") == -1 || email.IndexOf(".") == -1 || email.IndexOf("@") != email.LastIndexOf("@") 
-				|| email.IndexOf("@")+1 >= email.LastIndexOf(".") || email.IndexOf(".") == email.Length 
-				|| email.IndexOf(" ")!=-1)
+			if (ValidateEmail(incomingEmail))
 			{
-				result = "\nError. Email adress must comply to format: \n<account_name>@<hosting_name>.<domain_name>\n";
-				return result;
-			}
-			string[] emailSplit = email.Split('@');
-			emailHidden = emailHidden + email[0] + email[1];
-			while (emailHidden.Length < emailSplit[0].Length)
-			{
-				emailHidden = emailHidden + "*";
-			}
-			emailHidden = emailHidden + "@";
-			while (emailHidden.Length < email.Length - 2)
-			{
-				emailHidden = emailHidden + "*";
-			}
-			emailHidden = emailHidden + email[email.Length - 2] + email[email.Length - 1];
-			return result;
-		}
+				_email = incomingEmail;
+				string[] emailSplit = _email.Split('@');
+				var maskedEmailBuilder = new StringBuilder($"{_email[0]}{_email[1]}");
 
-		public string ShowEmail()
-		{
-			if (String.IsNullOrWhiteSpace(emailHidden))
-			{
-				return "\nPlease set email first.\n"; 
+				while (maskedEmailBuilder.Length < emailSplit[0].Length)
+				{
+					maskedEmailBuilder.Append("*");
+				}
+
+				maskedEmailBuilder.Append("@");
+
+				while (maskedEmailBuilder.Length < _email.Length - 2)
+				{
+					maskedEmailBuilder.Append("*");
+				}
+				_maskedEmail = maskedEmailBuilder.ToString() + _email[_email.Length - 2] + _email[_email.Length - 1];
 			}
 			else
 			{
-				return emailHidden;
+				result = "\nError. Email adress must comply to format: \n<account_name>@<hosting_name>.<domain_name>\n";
 			}
-			
+			return result;
+		}
+
+		private bool ValidateEmail(string incomingEmail)
+		{
+			return incomingEmail.IndexOf("@") != -1 && incomingEmail.IndexOf(".") != -1 &&
+				   incomingEmail.IndexOf("@") == incomingEmail.LastIndexOf("@") &&
+				   incomingEmail.IndexOf("@") + 1 < incomingEmail.LastIndexOf(".") &&
+				   incomingEmail.IndexOf(".") != incomingEmail.Length - 1 && incomingEmail.IndexOf(" ") == -1;
 		}
 	}
 }
