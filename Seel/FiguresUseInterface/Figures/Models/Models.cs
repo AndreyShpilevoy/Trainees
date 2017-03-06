@@ -4,15 +4,15 @@ namespace Figures.Models
 {
 	class Square : IFigure
 	{
-		double side;
+		private double _side;
 		public Square(double input)
 		{
-			side = input;
+			_side = input;
 		}
 
 		public double Area
 		{
-			get { return Math.Pow(side, 2); }
+			get { return Math.Pow(_side, 2); }
 		}
 
 		public void GetInfo()
@@ -24,15 +24,15 @@ namespace Figures.Models
 
 	class Circle : IFigure
 	{
-		double radius;
+		private double _radius;
 		public Circle(double input)
 		{
-			radius = input;
+			_radius = input;
 		}
 
 		public double Area
 		{
-			get { return Math.PI * Math.Pow(radius, 2); }
+			get { return Math.PI * Math.Pow(_radius, 2); }
 		}
 
 		public void GetInfo()
@@ -44,17 +44,17 @@ namespace Figures.Models
 
 	class Rectangle : IFigure
 	{
-		double sideOne;
-		double sideTwo;
+		private double _sideOne;
+		private double _sideTwo;
 		public Rectangle(double inputA, double inputB)
 		{
-			sideOne = inputA;
-			sideTwo = inputB;
+			_sideOne = inputA;
+			_sideTwo = inputB;
 		}
 
-		public new double Area
+		public double Area
 		{
-			get { return sideOne * sideTwo; }
+			get { return _sideOne * _sideTwo; }
 		}
 
 		public void GetInfo()
