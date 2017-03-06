@@ -36,7 +36,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Base\Calculating.cs" />
+    <Compile Include="Models\IModelInfo.cs" />
     <Compile Include="Models\Programm.cs" />
     <Compile Include="Models\Model.cs" />
   </ItemGroup>

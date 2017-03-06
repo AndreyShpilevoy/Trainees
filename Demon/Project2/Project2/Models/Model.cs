@@ -1,10 +1,10 @@
 ﻿using System;
 
-class Rectangle : ModelInfo
+class Rectangle : IModelInfo
 {
-	public double aSide;
-	public double bSide;
-	public string type;
+	protected double aSide;
+	protected double bSide;
+	protected string type;
 
 	public Rectangle()
 	{
@@ -37,7 +37,7 @@ class Rectangle : ModelInfo
 	}
 }
 
-class Circle : ModelInfo
+class Circle : IModelInfo
 {
 	private double radius;
 	private string figureType;
@@ -72,7 +72,7 @@ class Circle : ModelInfo
 	}
 }
 
-class Rhombus : ModelInfo
+class Rhombus : IModelInfo
 {
 	private double diagonalBig;
 	private double diagonalLittle;
@@ -115,31 +115,31 @@ class Rhombus : ModelInfo
 
 class Triangle : Rectangle
 {
-	public double cSide;
-	public double width;
+	private double _cSide;
+	private double _width;
 
 	public Triangle(double aSideTriangle, double bSideTriangle, double cSideTriangle, double widthTriangle, string name)
 	{
 		aSide = aSideTriangle;
 		bSide = bSideTriangle;
-		cSide = cSideTriangle;
-		width = widthTriangle;
+		_cSide = cSideTriangle;
+		_width = widthTriangle;
 		type = name;
 	}
 
 	public override double Area()
 	{
-		return 0.5 * width * cSide;
+		return 0.5 * _width * _cSide;
 	}
 
 	public override double Perimeter()
 	{
-		return aSide + bSide + cSide;
+		return aSide + bSide + _cSide;
 	}
 
 	public override void GetInfo()
 	{
-		Console.WriteLine("\nFigure type: " + type + "\nSide a: " + aSide + "\nSide b: " + bSide + "\nSide c: " + cSide+ "\nWidth to c side: " + width);
+		Console.WriteLine("\nFigure type: " + type + "\nSide a: " + aSide + "\nSide b: " + bSide + "\nSide c: " + _cSide+ "\nWidth to c side: " + _width);
 		Console.WriteLine("Figure area: {0:#.##}", Area());
 		Console.WriteLine("Figure curve length: {0:#.##}", Perimeter());
 	}
