@@ -1,44 +1,62 @@
 ﻿using System;
 
-class Square:Figure
+class Rectangle : IModelInfo
 {
-	public Square(double side, string name): base(side, side,name)
+	protected double aSide;
+	protected double bSide;
+	protected string type;
+
+	public Rectangle()
 	{
+		aSide = 0.0;
+		bSide = 0.0;
+		type = "figure";
 	}
 
-	public override double Area()
+	public Rectangle(double sideA, double sideB, string ftyppe)
 	{
-		return Width * Height;
+		aSide = sideA;
+		bSide = sideB;
+		type = ftyppe;
 	}
 
-	public double Perimeter()
+	public virtual double Area()
 	{
-		return 2 * (Width + Height);
+		return aSide * bSide;
 	}
-	public override void GetInfo()
+
+	public virtual double Perimeter()
 	{
-		Console.WriteLine("\nName: "+Name+"\nSide: "+Width);
+		return 2 * (aSide + bSide);
+	}
+	public virtual void GetInfo()
+	{
+		Console.WriteLine("\nFigure type: " + type + "\nSide A: " + aSide + "\nSide B: " + bSide);
+		Console.WriteLine("Figure area: {0:#.##}", Area());
+		Console.WriteLine("Figure curve length: {0:#.##}", Perimeter());
 	}
 }
 
-class Circle : Figure
+class Circle : IModelInfo
 {
-	public double radius;
+	private double radius;
+	private string figureType;
 
 	public Circle()
 	{
 		radius = 0.0;
+		figureType = "figure";
 	}
 
-	public Circle(double radiusCircle, string nameCircle):base(radiusCircle * 2, radiusCircle * 2, nameCircle)
+	public Circle(double radiusCircle, string typeFigure)
 	{
 		radius = radiusCircle;
-		Name = nameCircle;
+		figureType = typeFigure;
 	}
 
-	public override double Area()
+	public double Area()
 	{
-		return Math.PI * Math.Pow(radius, 2);
+		return Math.PI * Math.Pow(radius,2);
 	}
 
 	public double Perimeter()
@@ -46,114 +64,83 @@ class Circle : Figure
 		return 2 * Math.PI * radius;
 	}
 
-	public override void GetInfo()
+	public void GetInfo()
 	{
-		Console.WriteLine("\nName: " + Name + "\nRadius: " + radius + "\nDiameter: " + radius*2);
+		Console.WriteLine("\nFigure type: " + figureType + "\nRadius: " + radius);
+		Console.WriteLine("Figure area: {0:#.##}", Area());
+		Console.WriteLine("Figure curve length: {0:#.##}",Perimeter());
 	}
 }
 
-class Rhombus :Figure
+class Rhombus : IModelInfo
 {
-	public double diagonalMax;
-	public double diagonalMin;
-	public double aSide;
-	public double bSide;
+	private double diagonalBig;
+	private double diagonalLittle;
+	private double side;
+	private string typeRhombus;
 
 	public Rhombus()
 	{
-		diagonalMax = 0.0;
-		diagonalMin = 0.0;
-		aSide = 0.0;
-		bSide = 0.0;
+		diagonalBig = 0.0;
+		diagonalLittle = 0.0;
+		side = 0.0;
+		typeRhombus = "figure";
 	}
 
-	public Rhombus(double aSideRhomb,double bSideRhomb,double diagonalMaximum, double diagonalMinimum, string name)
+	public Rhombus(double SideRhomb, double diagonalMaximum, double diagonalMinimum, string name)
 	{
-		aSide = aSideRhomb;
-		bSide = bSideRhomb;
-		diagonalMax = diagonalMaximum;
-		diagonalMin = diagonalMinimum;
-		Name = name;
+		side = SideRhomb;
+		diagonalBig = diagonalMaximum;
+		diagonalLittle = diagonalMinimum;
+		typeRhombus = name;
 	}
 
-	public override double Area()
+	public double Area()
 	{
-		return 0.5 * diagonalMax * diagonalMin;
+		return 0.5 * diagonalBig * diagonalLittle;
 	}
 
 	public virtual double Perimeter()
 	{
-		return 2 * (aSide + bSide);
+		return 4 * side;
 	}
 
-	public override void GetInfo()
+	public void GetInfo()
 	{
-		Console.WriteLine("\nName: " + Name + "\nSide a: " + aSide + "\nSide b: " + bSide+"\nDiagonal 1: "+diagonalMax+"\nDiagonal 2: "+diagonalMin);
+		Console.WriteLine("\nFigure type: " + typeRhombus + "\nSide: " + side + "\nDiagonal 1: " + diagonalBig + "\nDiagonal 2: " + diagonalLittle);
+		Console.WriteLine("Figure area: {0:#.##}", Area());
+		Console.WriteLine("Figure curve length: {0:#.##}", Perimeter());
 	}
 }
 
-class Triangle : Rhombus
+class Triangle : Rectangle
 {
-	double cSide;
+	private double _cSide;
+	private double _width;
 
-	public Triangle()
-	{
-	}
-
-	public Triangle(double aSideTriangle, double bSideTriangle, double widthTriangle, double heightTriangle, string name)
+	public Triangle(double aSideTriangle, double bSideTriangle, double cSideTriangle, double widthTriangle, string name)
 	{
 		aSide = aSideTriangle;
 		bSide = bSideTriangle;
-		Width = widthTriangle;
-		Height = heightTriangle;
-		Name = name;
+		_cSide = cSideTriangle;
+		_width = widthTriangle;
+		type = name;
 	}
 
 	public override double Area()
 	{
-		return 0.5 * aSide * Height;
+		return 0.5 * _width * _cSide;
 	}
 
 	public override double Perimeter()
 	{
-		return aSide + bSide + cSide;
+		return aSide + bSide + _cSide;
 	}
 
 	public override void GetInfo()
 	{
-		Console.WriteLine("\nName: " + Name + "\nSide a: " + aSide + "\nSide b: " + bSide + "\nWidth: " + Width + "\nHeight: " + Height);
-	}
-}
-
-class Programm
-{
-	static void Main()
-	{
-		Figure[] figure = new Figure[4];
-
-		figure [0] = new Square(6.2, "Square");
-		figure[1] = new Circle(2.3, "Circle");
-		figure[2] = new Rhombus(2.67, 2.67, 4.9, 2.1, "rhombus");
-		figure[3] = new Triangle(6.7, 6.7, 9.4, 4.77, "triangle");
-
-		Square square = new Square(6.2, "Square");
-		Circle circle = new Circle(2.3, "Circle");
-		Rhombus rhombus = new Rhombus(2.67, 2.67, 4.9, 2.1, "rhombus");
-		Triangle triangle = new Triangle(6.7, 6.7, 9.4, 4.77, "triangle");
-
-		for (var i = 0; i < figure.Length; i++)
-		{
-			figure[i].GetInfo();
-			Console.WriteLine("Area: " + figure[i].Area());
-		}
-
-		Console.WriteLine("\nSquare perimeter: " + square.Perimeter());
-		Console.WriteLine("Circle perimeter: " + circle.Perimeter());
-		Console.WriteLine("Rhombus perimeter: " + rhombus.Perimeter());
-		Console.WriteLine("Triangle perimeter: " + triangle.Perimeter());
-
-
-
-		Console.WriteLine("Circle Width: " + circle.Width);
+		Console.WriteLine("\nFigure type: " + type + "\nSide a: " + aSide + "\nSide b: " + bSide + "\nSide c: " + _cSide+ "\nWidth to c side: " + _width);
+		Console.WriteLine("Figure area: {0:#.##}", Area());
+		Console.WriteLine("Figure curve length: {0:#.##}", Perimeter());
 	}
 }
