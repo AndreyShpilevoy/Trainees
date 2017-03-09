@@ -4,17 +4,31 @@ namespace Phone_Book
 {
 	class Contact
 	{
-		public string newName;
-		public long newNumber;
-		public string newDescription;
-		public string searchName;
 
-		public Contact()
+		public Contact(string name, long number, string description)
 		{
-			newName = string.Empty;
-			newNumber = 0;
-			newDescription = string.Empty;
-			searchName= string.Empty;
+			Name = name;
+			Number = number;
+			Description = description;
 		}
+
+		public Contact(string name, string number, string description)
+		{
+			Name = name;
+			Description = description;
+			long numberParsed;
+			if (Int64.TryParse(number.Trim('+'), out numberParsed))
+			{
+				Number = numberParsed;
+			}
+			else
+			{
+				Number = 0;
+			}
+		}
+
+		public string Name { get; set; }
+		public long Number { get; set; }
+		public string Description { get; set; }
 	}
 }
