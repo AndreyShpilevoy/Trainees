@@ -6,114 +6,92 @@ namespace Phone_Book
 {
 	class ReadWrite
 	{
-		public int numberNext=0;
-		int searchIndex = 0;
-		public int searchNumber;
-		private List<string> contact = new List<string>();
-		private Contact newContact = new Contact();
-		private string _pathToFile = @"E:\Admin\Documents\Trainees\Demon\Phone Book\Contacts.txt";
-		public string[] _fileContent;
-		public string[] split;
-		public List<string> showAll = new List<string>();
-		private long inputNumber;
-		private string descriptionValid;
+		private List<Contact> _contactList = new List<Contact>();
+		private string _pathToFile = @"..\..\..\Contacts.txt";
 
 		public void OpenFile()
 		{
-			_fileContent = File.ReadAllLines(_pathToFile);
-			for (var i = 0; i < _fileContent.Length; i++)
+			var fileContent = File.ReadAllLines(_pathToFile);
+			for (var i = 0; i < fileContent.Length; i++)
 			{
-				contact.Add(_fileContent[i]);
-			}
-		}
-
-		public void AddNewName()
-		{
-			newContact.newName = Console.ReadLine();
-		}
-
-		public void AddNewNumber()
-		{
-			newContact.newNumber = inputNumber;
-		}
-
-		public void AddNewDescription()
-		{
-			newContact.newDescription = descriptionValid;
-		}
-
-		public void SaveNewContact()
-		{
-			contact.Add(String.Format("{0}\t+{1}\t{2}", newContact.newName, newContact.newNumber, newContact.newDescription));
-			File.WriteAllLines(_pathToFile, contact);
-		}
-
-		public void SearchName()
-		{			
-			newContact.searchName = Console.ReadLine();
-			for (searchNumber = 0; searchNumber < _fileContent.Length; searchNumber++)
-			{
-				searchIndex = _fileContent[searchNumber].IndexOf(newContact.searchName);
+				var splitedContactString = fileContent[i].Split(new Char[] {'\t'});
+				_contactList.Add(new Contact(splitedContactString[0], splitedContactString[1], splitedContactString[2]));
 			}
 		}
 		
-		public void SplitSearch()
+		public void AddNewContact(Contact newContact)
 		{
-			if (searchIndex >= 0)
+			_contactList.Add(newContact);
+			Save();
+		}
+
+		public void EditContact(int contactIndex, Contact newContact)
+		{
+			_contactList[contactIndex] = newContact;
+			Save();
+		}
+
+		public int SearchIndexByName(string value)
+		{
+			int result = -1;
+			for (var searchNumber = 0; searchNumber < _contactList.Count; searchNumber++)
 			{
-				split = _fileContent[searchNumber-1].Split(new Char[] { '\t' });
+				if (_contactList[searchNumber].Name.IndexOf(value) != -1)
+				{
+					result = searchNumber;
+				}
 			}
+			return result;
 		}
 
-		public void EditName()
+		public Contact SearchContactByName(string value)
 		{
-			split[0] = Console.ReadLine();
-		}
-
-		public void EditNumber()
-		{
-			split[1] =Convert.ToString(inputNumber);
-		}
-
-		public void EditDescription()
-		{
-			split[2] = Console.ReadLine();
-		}
-
-		public void SaveEditontact()
-		{
-			string edit = String.Format("{0}\t+{1}\t{2}", split[0], split[1], split[2]);
-			contact.Insert(searchNumber - 1, edit);
-			File.WriteAllLines(_pathToFile, contact);
-		}
-
-		public void DeleteContact()
-		{
-			contact.RemoveAt(searchNumber - 1);
-			File.WriteAllLines(_pathToFile, contact);
-		}
-
-		public bool NumberValid()
-		{
-			var newNumber = Console.ReadLine();
-			return Int64.TryParse(newNumber, out inputNumber);
-		}
-
-		public bool DescriptionValid()
-		{
-			descriptionValid = Console.ReadLine();
-			return descriptionValid.Length <= 256;
-		}
-
-		public void ShowAll()
-		{
-			showAll.Clear();
-			_fileContent = File.ReadAllLines(_pathToFile);
-			for (var i = 0; i < _fileContent.Length; i++)
+			Contact result = null;
+			for (var searchNumber = 0; searchNumber < _contactList.Count; searchNumber++)
 			{
-				split = _fileContent[i].Split(new Char[] { '\t' });
-				showAll.Add(String.Format("{0}\t{1}",split[0],split[1]));
+				if (_contactList[searchNumber].Name.IndexOf(value) != -1)
+				{
+					result = _contactList[searchNumber];
+				}
 			}
+			return result;
+		}
+
+		public Contact GetContactByIndex(int value)
+		{
+			return _contactList[value];
+		}
+
+		public void DeleteContact(int contactIndex)
+		{
+			_contactList.RemoveAt(contactIndex);
+			Save();
+		}
+
+		public bool NumberValidator(string value)
+		{
+			long inputNumber;
+			return Int64.TryParse(value, out inputNumber);
+		}
+
+		public bool DescriptionValidator(string value)
+		{
+			return value.Length <= 256;
+		}
+
+		public List<Contact> GetAllContacts()
+		{
+			return _contactList;
+		}
+
+		private void Save()
+		{
+			var dataForFile = new List<string>();
+			foreach (var contact in _contactList)
+			{
+				dataForFile.Add($"{contact.Name}\t+{contact.Number}\t{contact.Description}");
+			}
+			File.WriteAllLines(_pathToFile, dataForFile);
 		}
 	}
 }

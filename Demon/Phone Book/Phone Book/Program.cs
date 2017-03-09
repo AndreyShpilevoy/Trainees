@@ -6,9 +6,9 @@ namespace Phone_Book
 	{
 		static void Main()
 		{
-			ReadWrite newFile = new ReadWrite();
+			ReadWrite readWrite = new ReadWrite();
 			string command = string.Empty;
-			newFile.OpenFile();
+			readWrite.OpenFile();
 
 			Console.WriteLine("Welcome to Phone Book v0.1\nFor show list of commands enter \"Help\"\n");
 
@@ -21,32 +21,34 @@ namespace Phone_Book
 					case "add":
 						{
 							Console.WriteLine("Enter the contact name");
-							newFile.AddNewName();
-
-							while (newFile.numberNext==0)
+							var newContactName =Console.ReadLine();
+							var newContactNumber = String.Empty;
+							var newContactDescription = String.Empty;
+							var enteredDataIsValid = false;
+							while (!enteredDataIsValid)
 							{
 								Console.WriteLine("Enter the contact number without +");
-								if (newFile.NumberValid())
+								var contactNumber = Console.ReadLine();
+								if (readWrite.NumberValidator(contactNumber))
 								{
-									newFile.AddNewNumber();
-									newFile.SaveNewContact();
-									newFile.numberNext = 1;
+									newContactNumber = contactNumber;
+									enteredDataIsValid = true;
 								}
 								else
 								{
 									Console.WriteLine("Phone number can contain only numbers");
 								}
 							}
-							newFile.numberNext = 0;
-							
-							while (newFile.numberNext == 0)
+
+							enteredDataIsValid = false;
+							while (!enteredDataIsValid)
 							{
 								Console.WriteLine("Enter the contact description");
-								if (newFile.DescriptionValid())
+								var contactDescription = Console.ReadLine();
+								if (readWrite.DescriptionValidator(contactDescription))
 								{
-									newFile.AddNewDescription();
-									newFile.SaveNewContact();
-									newFile.numberNext = 1;
+									newContactDescription = contactDescription;
+									enteredDataIsValid = true;
 								}
 
 								else
@@ -55,7 +57,8 @@ namespace Phone_Book
 								}
 
 							}
-							newFile.numberNext = 0;
+							var newContact = new Contact(newContactName, newContactNumber, newContactDescription);
+							readWrite.AddNewContact(newContact);
 							Console.Clear();
 							break;
 						}
@@ -63,8 +66,14 @@ namespace Phone_Book
 					case "edit":
 						{
 							Console.WriteLine("Enter the name of the contact to edit");
-							newFile.SearchName();
-							newFile.SplitSearch();
+							var indexForEdit = readWrite.SearchIndexByName(Console.ReadLine());
+							if (indexForEdit == -1)
+							{
+								Console.WriteLine("Wrong name");
+								break;
+							}
+							var editedModel = readWrite.GetContactByIndex(indexForEdit);
+
 							Console.WriteLine("\nEnter \"name\" if you want to edit contact name."+
 											  "\nEnter \"number\" if you want to edit contact number."+
 											  "\nEnter \"description\" if you want to edit contact description.");
@@ -74,23 +83,21 @@ namespace Phone_Book
 								case "name":
 									{
 										Console.WriteLine("Enter new contact name");
-										newFile.EditName();
-										newFile.DeleteContact();
-										newFile.SaveEditontact();
+										editedModel.Name = Console.ReadLine();
 										break;
 									}
 
 								case "number":
 									{
-										while (newFile.numberNext == 0)
+										var enteredDataIsValid = false;
+										while (!enteredDataIsValid)
 										{
 											Console.WriteLine("Enter new contact number");
-											if (newFile.NumberValid())
+											var contactNumber = Console.ReadLine();
+											if (readWrite.NumberValidator(contactNumber))
 											{
-												newFile.EditNumber();
-												newFile.DeleteContact();
-												newFile.SaveEditontact();
-												newFile.numberNext = 1;
+												editedModel.Number = Int64.Parse(contactNumber);
+												enteredDataIsValid = true;
 											}
 
 											else
@@ -98,21 +105,20 @@ namespace Phone_Book
 												Console.WriteLine("Please enter correct phone number");
 											}
 										}
-										newFile.numberNext = 0;
 										break;
 									}
 
 								case "description":
 									{
-										while (newFile.numberNext == 0)
+										var enteredDataIsValid = false;
+										while (!enteredDataIsValid)
 										{
 											Console.WriteLine("Enter new contact description");
-											if (newFile.DescriptionValid())
+											var contactDescription = Console.ReadLine();
+											if (readWrite.DescriptionValidator(contactDescription))
 											{
-												newFile.EditDescription();
-												newFile.DeleteContact();
-												newFile.SaveEditontact();
-												newFile.numberNext = 1;
+												editedModel.Description = contactDescription;
+												enteredDataIsValid = true;
 											}
 
 											else
@@ -121,7 +127,6 @@ namespace Phone_Book
 											}
 
 										}
-										newFile.numberNext = 0;
 										break;
 									}
 							}
@@ -132,28 +137,32 @@ namespace Phone_Book
 					case "delete":
 						{
 							Console.WriteLine("Enter the name of the contact to delete");
-							newFile.SearchName();
-							newFile.DeleteContact();
+							var indexForDelete = readWrite.SearchIndexByName(Console.ReadLine());
+							if (indexForDelete == -1)
+							{
+								Console.WriteLine("Wrong name");
+								break;
+							}
+							readWrite.DeleteContact(indexForDelete);
 							Console.Clear();
 							break;
 						}
 
 					case "showall":
 						{
-							newFile.ShowAll();
-							for (var i = 0; i < newFile.showAll.Count; i++)
+							var allContacts = readWrite.GetAllContacts();
+							foreach (var contact in allContacts)
 							{
-								Console.WriteLine(newFile.showAll[i]);
+								Console.WriteLine($"{contact.Name}\t+{contact.Number}");
 							}
-
 							break;
 						}
 
 					case "showcontact":
 						{
 							Console.WriteLine("Enter the name of the contact to show");
-							newFile.SearchName();
-							Console.WriteLine(newFile._fileContent[newFile.searchNumber-1]);
+							var contact = readWrite.SearchContactByName(Console.ReadLine());
+							Console.WriteLine($"{contact.Name}\t+{contact.Number}\t{contact.Description}");
 							break;
 						}
 
