@@ -6,71 +6,72 @@ namespace AdressBook
 {
 	class DataManipulation
 	{
-		string pathToFile;
-		string[] fileContent;
-		List<string[]> parsedFile;
+		private string _pathToFile;
+		private string[] _fileContent;
+		private List<string[]> _parsedFile;
 
 		public DataManipulation()
 		{
-			pathToFile = @"..\..\..\PhoneNumbers.txt";
-			fileContent = File.ReadAllLines(pathToFile);
-			parsedFile = new List<string[]>();
+			_pathToFile = @"..\..\..\PhoneNumbers.txt";
+			CheckFile();
+			_fileContent = File.ReadAllLines(_pathToFile);
+			_parsedFile = new List<string[]>();
 
-			foreach (string line in fileContent)
+			foreach (string line in _fileContent)
 			{
 				string[] parsedLine = line.Split(':');
-				parsedFile.Add(parsedLine);
+				_parsedFile.Add(parsedLine);
 			}
 		}
 
 		public List<string[]> GetFileContent()
 		{
-			return parsedFile;
+			return _parsedFile;
 		}
 
 		public string[] GetContact(int index)
 		{
-			return parsedFile[index];
+			return _parsedFile[index];
 		}
 
 		public void CheckFile()
 		{
-			if (!File.Exists(pathToFile))
+			if (!File.Exists(_pathToFile))
 			{
-				File.AppendAllLines(pathToFile, new[] { "Aleksandr:+79162305724:Asshole" });
+				File.AppendAllLines(_pathToFile, new[] { "Aleksandr:+79162305724:Asshole" });
 			}
-			var fileContent = File.ReadAllText(pathToFile);
-			File.WriteAllText(pathToFile, fileContent);
+			var fileContent = File.ReadAllText(_pathToFile);
+			File.WriteAllText(_pathToFile, fileContent);
 		}
 
 		public void AddNewContact(string name, string number, string comment)
 		{
 			string tempString = name + ":" + number + ":" + comment;
-			File.AppendAllLines(pathToFile, new[] { tempString });
-			parsedFile.Add(new string[] { name, number, comment });
+			File.AppendAllLines(_pathToFile, new[] { tempString });
+			_parsedFile.Add(new string[] { name, number, comment });
 		}
 
 		public void Edit(int editableContact, int editableField, string changeTo)
 		{
+			string[] constructedContact = null;
 			switch (editableField)
 			{
 				case 0:
-					string[] constructedContact0 = { changeTo, parsedFile[editableContact][1], parsedFile[editableContact][2] };
-					parsedFile[editableContact] = constructedContact0;
+					constructedContact = new string[]{ changeTo, _parsedFile[editableContact][1], _parsedFile[editableContact][2] };
 					break;
 				case 1:
-					string[] constructedContact1 = { parsedFile[editableContact][0], changeTo, parsedFile[editableContact][2] };
-					parsedFile[editableContact] = constructedContact1;
+					constructedContact = new string[] { _parsedFile[editableContact][0], changeTo, _parsedFile[editableContact][2] };
 					break;
 				case 2:
-					string[] constructedContact2 = { parsedFile[editableContact][0], parsedFile[editableContact][1], changeTo };
-					parsedFile[editableContact] = constructedContact2;
+					constructedContact = new string[] { _parsedFile[editableContact][0], _parsedFile[editableContact][1], changeTo };
 					break;
 			}
-			File.WriteAllText(pathToFile, String.Empty);
-			foreach (string[] line in parsedFile)
+			_parsedFile[editableContact] = constructedContact;
+
+			File.WriteAllText(_pathToFile, String.Empty);
+			foreach (string[] line in _parsedFile)
 			{
-				File.AppendAllLines(pathToFile, new[] { line[0] + ":" + line[1] + ":" + line[2] });
+				File.AppendAllLines(_pathToFile, new[] { line[0] + ":" + line[1] + ":" + line[2] });
 			}
 		}
 

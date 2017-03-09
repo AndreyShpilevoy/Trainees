@@ -1,63 +1,63 @@
 ﻿using System;
-using System.Text;
 using System.Linq;
-using AdressBook;
 
 namespace AdressBook
 {
+	enum UserCommands
+	{
+		ShowAll,
+		ShowContact,
+		AddNew,
+		Edit,
+		Clear,
+		Help
+	}
+
 	class InputOutput
 	{
-		string contactName;
-		string contactNumber;
-		string contactComment;
-		enum UserCommands
-		{
-			ShowAll,
-			ShowContact,
-			AddNew,
-			Edit,
-			Clear,
-			Help
-		}
+		private string _contactName;
+		private string _contactNumber;
+		private string _contactComment;
+		private DataManipulation  _data;
 
-		public InputOutput()
+		public InputOutput(DataManipulation data)
 		{
-			contactName = String.Empty;
-			contactNumber = String.Empty;
-			contactComment = String.Empty;
+			_contactName = String.Empty;
+			_contactNumber = String.Empty;
+			_contactComment = String.Empty;
+			_data = data;
 		}
 
 		public string ContactName
 		{
 			get
 			{
-				return contactName;
+				return _contactName;
 			}
 			set
 			{
 				if (value.IndexOf(":") == -1)
 				{
-					contactName = value;
+					_contactName = value;
 				}
 			}
-
 		}
 
 		public string ContactNumber
 		{
 			get
 			{
-				return contactNumber;
+				return _contactNumber;
 			}
 			set
 			{
 				if (value.IndexOf(":") == -1 && !value.Any(char.IsLetter))
 				{
-					contactNumber = value;
+					_contactNumber = value;
 				}
 				else
 				{
-					contactNumber = "Unspecified number";
+					_contactNumber = "Unspecified number";
 				}
 			}
 		}
@@ -66,18 +66,18 @@ namespace AdressBook
 		{
 			get
 			{
-				return contactComment;
+				return _contactComment;
 			}
 			set
 			{
 				if (value.IndexOf(":") == -1)
 				{
-					contactComment = value;
+					_contactComment = value;
 				}
 			}
 		}
 
-		public void consoleAddNewContact(DataManipulation data)
+		public void ConsoleAddNewContact()
 		{
 			Console.WriteLine("Please enter name for a new contact.");
 			ContactName = Console.ReadLine();
@@ -85,51 +85,54 @@ namespace AdressBook
 			ContactNumber = Console.ReadLine();
 			Console.WriteLine("Please enter comment for a new contact.");
 			ContactComment = Console.ReadLine();
-			data.AddNewContact(ContactName, ContactNumber, ContactComment);
+			_data.AddNewContact(ContactName, ContactNumber, ContactComment);
 		}
 
-		public void consoleEdit(DataManipulation data)
+		public void ConsoleEdit()
 		{
 			Console.WriteLine("Please enter number of a contact you want to change.");
 			int editableContact = Int32.Parse(Console.ReadLine())-1;
 			Console.WriteLine("Please enter what information you want to change: 'name' OR 'number' OR 'comment'");
 			string editableField = Console.ReadLine();
 
+			string changeTo;
 			switch (editableField)
 			{
 				case "name":
+					changeTo = Console.ReadLine();
 					Console.WriteLine("Enter new name");
-					data.Edit(editableContact, 0, editableField);
+					_data.Edit(editableContact, 0, changeTo);
 					break;
 				case "number":
+					changeTo = Console.ReadLine();
 					Console.WriteLine("Enter new number");
-					data.Edit(editableContact, 1, editableField);
+					_data.Edit(editableContact, 1, changeTo);
 					break;
 				case "comment":
+					changeTo = Console.ReadLine();
 					Console.WriteLine("Enter new comment");
-					data.Edit(editableContact, 2, editableField);
+					_data.Edit(editableContact, 2, changeTo);
 					break;
 				default:
 					Console.WriteLine("Unavailable command. Type 'help' to see list of commands.");
 					break;
 			}
 			Console.WriteLine("Please enter new value");
-			string changeTo = Console.ReadLine();
-			consoleControl(data);
+			ConsoleControl();
 		}
 
-		public void consoleDisplayAll(DataManipulation data)
+		public void ConsoleDisplayAll()
 		{
-			var listContent = data.GetFileContent();
+			var listContent = _data.GetFileContent();
 			foreach (string[] line in listContent)
 			{
-				Console.WriteLine(String.Format("{0}) {1} :\t {2}", listContent.IndexOf(line) + 1, line[0], line[1]));
+				Console.WriteLine($"{listContent.IndexOf(line) + 1}) {line[0]} :\t {line[1]}");
 			}
 		}
 
-		public void consoleDisplaySpecific(DataManipulation data, int index)
+		public void ConsoleDisplaySpecific(int index)
 		{
-			var contact = data.GetContact(index);
+			var contact = _data.GetContact(index);
 			Console.WriteLine(contact[0] + " :\t" + contact[1]);
 			Console.WriteLine("If you want to return to adress book - type 'back'.\n" +
 				"If you want to edit this contact - type 'edit name' or 'edit number' or 'edit comment'");
@@ -142,42 +145,42 @@ namespace AdressBook
 					case "edit name":
 						{
 							string changeTo = Console.ReadLine();
-							data.Edit(0, index, changeTo);
+							_data.Edit(index, 0, changeTo);
 							break;
 						}
 					case "edit number":
 						{
 							string changeTo = Console.ReadLine();
-							data.Edit(1, index, changeTo);
+							_data.Edit(index, 1, changeTo);
 							break;
 						}
 					case "edit comment":
 						{
 							string changeTo = Console.ReadLine();
-							data.Edit(2, index, changeTo);
+							_data.Edit(index, 2, changeTo);
 							break;
 						}
 					case "back":
 						{
 							Console.Clear();
-							consoleHelp();
-							consoleDisplayAll(data);
+							ConsoleHelp();
+							ConsoleDisplayAll();
 							break;
 						}
 				}
 				if (input == "edit")
 				{
-					consoleEdit(data);
+					ConsoleEdit();
 				}
-				consoleControl(data);
+				ConsoleControl();
 			}
 		}
 
-		public void consoleControl(DataManipulation data)
+		public void ConsoleControl()
 		{
 			Console.Clear();
-			consoleHelp();
-			consoleDisplayAll(data);
+			ConsoleHelp();
+			ConsoleDisplayAll();
 			string input = String.Empty;
 			while (input != "exit")
 			{
@@ -187,29 +190,30 @@ namespace AdressBook
 
 				if (enteredEnum == UserCommands.ShowAll)
 				{
-					consoleDisplayAll(data);
+					ConsoleDisplayAll();
 				}
 				else if (enteredEnum == UserCommands.ShowContact)
 				{
 					Console.WriteLine("Enter index of contact you want to edit...");
 					int index = Int32.Parse(Console.ReadLine())-1;
-					consoleDisplaySpecific(data, index);
+					ConsoleDisplaySpecific(index);
 				}
 				else if (enteredEnum == UserCommands.AddNew)
 				{
-					consoleAddNewContact(data);
+					ConsoleAddNewContact();
 				}
 				else if (enteredEnum == UserCommands.Edit)
 				{
-					consoleEdit(data);
+					ConsoleEdit();
 				}
 				else if (enteredEnum == UserCommands.Clear)
 				{
 					Console.Clear();
+					ConsoleHelp();
 				}
 				else if (enteredEnum == UserCommands.Help)
 				{
-					consoleHelp();
+					ConsoleHelp();
 				}
 				else
 				{
@@ -219,7 +223,7 @@ namespace AdressBook
 			}
 		}
 
-		public void consoleHelp()
+		public void ConsoleHelp()
 		{
 			Console.WriteLine("List of commands: " +
 									  "\n'" + UserCommands.ShowAll + "' or " + (int)UserCommands.ShowAll + 
