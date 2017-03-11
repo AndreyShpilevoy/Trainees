@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="262" Margin="185,38,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="306"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="262" Margin="185,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306"/>
         <Button x:Name="readFromFileButton" Content="Read contacts &#xD;&#xA;from the file" HorizontalAlignment="Left" Margin="48,38,0,0" VerticalAlignment="Top" Width="97" Height="45" Click="readFromFileButton_Click"/>
         <Button x:Name="addNewContactButton" Content="Add new &#xD;&#xA;contact" HorizontalAlignment="Left" Height="41" Margin="48,98,0,0" VerticalAlignment="Top" Width="97" Click="addNewContactButton_Click"/>
         <Button x:Name="editContactButton" Content="Edit contact" HorizontalAlignment="Left" Height="38" Margin="48,237,0,0" VerticalAlignment="Top" Width="97" Click="editContactButton_Click"/>

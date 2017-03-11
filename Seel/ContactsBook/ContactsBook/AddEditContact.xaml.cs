@@ -44,6 +44,7 @@ namespace ContactsBook
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
 			_contactsBook.AddNewContact(textBox.Text, textBox1.Text, textBox2.Text);
+			Close();
 		}
 
 		private void button1_Click(object sender, RoutedEventArgs e)

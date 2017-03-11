@@ -19,7 +19,7 @@ namespace ContactsBook
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private ContactsBookBL contactBook = new ContactsBookBL();
+		private ContactsBookBL contactBookBl = new ContactsBookBL();
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -29,21 +29,21 @@ namespace ContactsBook
 		private void readFromFileButton_Click(object sender, RoutedEventArgs e)
 		{
 			textBox.Text = String.Empty;
-			foreach (ContactModel contact in contactBook.GetFileContent())
+			foreach (ContactModel contact in contactBookBl.GetFileContent())
 			{
-				textBox.Text += contact.ContactName + ":" + contact.ContactNumber + ":" + contact.ContactComment + "\n";
+				textBox.Text += $"{contact.ContactName} : {contact.ContactNumber} : {contact.ContactComment}\n";
 			}
 		}
 
 		private void editContactButton_Click(object sender, RoutedEventArgs e)
 		{
-			AddEditContact addEditContact = new AddEditContact(contactBook, Int32.Parse(textBox1.Text));
+			AddEditContact addEditContact = new AddEditContact(contactBookBl, Int32.Parse(textBox1.Text));
 			addEditContact.ShowDialog();
 		}
 
 		private void addNewContactButton_Click(object sender, RoutedEventArgs e)
 		{
-			AddEditContact addEditContact = new AddEditContact(contactBook);
+			AddEditContact addEditContact = new AddEditContact(contactBookBl);
 			addEditContact.ShowDialog();
 		}
 	}
