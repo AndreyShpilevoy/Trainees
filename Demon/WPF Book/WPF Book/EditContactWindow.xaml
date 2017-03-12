@@ -1,0 +1,23 @@
+﻿<Window x:Class="WPF_Book.EditContactWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPF_Book"
+      mc:Ignorable="d" 
+      d:DesignHeight="229.261" d:DesignWidth="460.227"
+      Title="Edit contact">
+
+    <Grid>
+        <TextBox x:Name="editName" HorizontalAlignment="Left" Height="23" Margin="115,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="324"/>
+        <TextBox x:Name="editNumber" HorizontalAlignment="Left" Height="23" Margin="115,63,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="324"/>
+        <TextBox x:Name="editDescription" HorizontalAlignment="Left" Height="23" Margin="115,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="324"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Edit name" VerticalAlignment="Top" Height="23" RenderTransformOrigin="-0.575,0.392" Width="100"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,63,0,0" TextWrapping="Wrap" Text="Edit number" VerticalAlignment="Top" Width="100" Height="23"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="10,120,0,0" TextWrapping="Wrap" Text="Edit description" VerticalAlignment="Top" Height="23" Width="100"/>
+        <Button x:Name="AcceptAddEdit" Content="Accept" Margin="180,169,183,0" VerticalAlignment="Top" Click="button_Click"/>
+        <TextBlock x:Name="textBlock_WrongDescription" HorizontalAlignment="Left" Margin="115,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="324"/>
+        <TextBlock x:Name="textBlock_WrongNumber" HorizontalAlignment="Left" Margin="115,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="324"/>
+
+    </Grid>
+</Window>
