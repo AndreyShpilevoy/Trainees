@@ -45,27 +45,27 @@ namespace WPF_Book
 
 		private void Add_contact_Click(object sender, RoutedEventArgs e)
 		{
-			AddContactWindow addWindow = new AddContactWindow();
+			AddContactWindow addWindow = new AddContactWindow(_readWrite);
 			addWindow.ShowDialog();
 		}
 
 		private void Edit_contact_Click(object sender, RoutedEventArgs e)
 		{
 			editDeleteShowIndex = 0;
-			SearchContactWindow searchWindow = new SearchContactWindow();
+			SearchContactWindow searchWindow = new SearchContactWindow(this, _readWrite);
 			searchWindow.ShowDialog();
 		}
 
 		private void Delete_contact_Click(object sender, RoutedEventArgs e)
 		{
 			editDeleteShowIndex = 1;
-			SearchContactWindow searchWindow = new SearchContactWindow();
+			SearchContactWindow searchWindow = new SearchContactWindow(this, _readWrite);
 			searchWindow.ShowDialog();
 		}
 
 		private void Show_contact_Click(object sender, RoutedEventArgs e)
 		{
-			SearchContactWindow searchWindow = new SearchContactWindow();
+			SearchContactWindow searchWindow = new SearchContactWindow(this, _readWrite);
 			searchWindow.ShowDialog();
 		}
 

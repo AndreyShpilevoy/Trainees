@@ -2,7 +2,7 @@
 
 namespace WPF_Book
 {
-	class Contact
+	public class Contact
 	{
 
 		public Contact(string name, long number, string description)

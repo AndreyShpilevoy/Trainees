@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace WPF_Book
 {
-	class ReadWrite
+	public class ReadWrite
 	{
 		private List<Contact> _contactList = new List<Contact>();
 		private string _pathToFile = @"..\..\..\Contacts.txt";
@@ -39,6 +39,7 @@ namespace WPF_Book
 				if (_contactList[searchNumber].Name.IndexOf(value) != -1)
 				{
 					result = searchNumber;
+					break;
 				}
 			}
 			return result;

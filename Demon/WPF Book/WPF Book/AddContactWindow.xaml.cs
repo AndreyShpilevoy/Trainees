@@ -20,10 +20,11 @@ namespace WPF_Book
 	/// </summary>
 	public partial class AddContactWindow : Window
 	{
-		private ReadWrite _readWrite = new ReadWrite();
+		private ReadWrite _readWrite;
 
-		public AddContactWindow()
+		public AddContactWindow(ReadWrite readWrite)
 		{
+			_readWrite = readWrite;
 			InitializeComponent();
 		}
 

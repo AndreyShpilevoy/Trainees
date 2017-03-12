@@ -20,11 +20,14 @@ namespace WPF_Book
 	/// </summary>
 	public partial class EditContactWindow : Window
 	{
-		private ReadWrite readWrite=new ReadWrite();
-		public EditContactWindow()
+		private ReadWrite _readWrite;
+		private int _index;
+		public EditContactWindow(ReadWrite readWrite, int index)
 		{
+			_readWrite = readWrite;
+			_index = index;
 			InitializeComponent();
-			var editModel = readWrite.GetContactByIndex(SearchContactWindow.IndexForEdit());
+			var editModel = _readWrite.GetContactByIndex(_index);
 			editName.Text = editModel.Name;
 			editNumber.Text = editModel.Number.ToString();
 			editDescription.Text = editModel.Description;
@@ -32,11 +35,11 @@ namespace WPF_Book
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
-			var editedModel = readWrite.GetContactByIndex(SearchContactWindow.IndexForEdit());
+			var editedModel = _readWrite.GetContactByIndex(_index);
 			editedModel.Name = editName.Text;
 
 			var contactNumber = editNumber.Text;
-			if (readWrite.NumberValidator(contactNumber))
+			if (_readWrite.NumberValidator(contactNumber))
 			{
 				editedModel.Number = Int64.Parse(contactNumber);
 			}
@@ -47,7 +50,7 @@ namespace WPF_Book
 			}
 
 			var contactDescription = editDescription.Text;
-			if (readWrite.DescriptionValidator(contactDescription))
+			if (_readWrite.DescriptionValidator(contactDescription))
 			{
 				editedModel.Description = contactDescription;
 			}
@@ -57,9 +60,9 @@ namespace WPF_Book
 				textBlock_WrongDescription.Text = "Description can not contain more than 256 symbols";
 			}
 
-			if (readWrite.DescriptionValidator(contactDescription)&& readWrite.NumberValidator(contactNumber))
+			if (_readWrite.DescriptionValidator(contactDescription)&& _readWrite.NumberValidator(contactNumber))
 			{
-				readWrite.EditContact(SearchContactWindow.IndexForEdit(), editedModel);
+				_readWrite.EditContact(_index, editedModel);
 				Close();
 			}
 		}
