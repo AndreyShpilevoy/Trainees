@@ -13,9 +13,16 @@ namespace ContactsBook
 
 		public ContactModel(string incomingName, string incomingNumber, string incomingComment)
 		{
-			_contactName = incomingName;
-			_contactNumber = incomingNumber;
-			_contactComment = incomingComment;
+			ContactName = incomingName;
+			ContactNumber = incomingNumber;
+			ContactComment = incomingComment;
+		}
+
+		public bool Validation()
+		{
+			if (_contactName != "Unspecified name" && _contactNumber != "Unspecified number")
+			{ return true; }
+			else { return false; }
 		}
 
 		public string ContactName
@@ -26,9 +33,13 @@ namespace ContactsBook
 			}
 			set
 			{
-				if (value.IndexOf(":") == -1)
+				if (value.IndexOf(":") == -1 && value != String.Empty)
 				{
 					_contactName = value;
+				}
+				else
+				{
+					_contactName = "Unspecified name";
 				}
 			}
 		}
@@ -41,7 +52,7 @@ namespace ContactsBook
 			}
 			set
 			{
-				if (value.IndexOf(":") == -1 && !value.Any(char.IsLetter))
+				if (value.IndexOf(":") == -1 && !value.Any(char.IsLetter) && value != String.Empty)
 				{
 					_contactNumber = value;
 				}
@@ -63,6 +74,10 @@ namespace ContactsBook
 				if (value.IndexOf(":") == -1)
 				{
 					_contactComment = value;
+				}
+				else
+				{
+					_contactComment = value.Replace(":", "-");
 				}
 			}
 		}

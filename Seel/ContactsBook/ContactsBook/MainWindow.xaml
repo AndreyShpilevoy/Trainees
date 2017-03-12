@@ -5,14 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContactsBook"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="MainWindow" Height="356" Width="529">
+    <Grid Margin="0,0,0,-6">
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="262" Margin="185,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306"/>
         <Button x:Name="readFromFileButton" Content="Read contacts &#xD;&#xA;from the file" HorizontalAlignment="Left" Margin="48,38,0,0" VerticalAlignment="Top" Width="97" Height="45" Click="readFromFileButton_Click"/>
         <Button x:Name="addNewContactButton" Content="Add new &#xD;&#xA;contact" HorizontalAlignment="Left" Height="41" Margin="48,98,0,0" VerticalAlignment="Top" Width="97" Click="addNewContactButton_Click"/>
-        <Button x:Name="editContactButton" Content="Edit contact" HorizontalAlignment="Left" Height="38" Margin="48,237,0,0" VerticalAlignment="Top" Width="97" Click="editContactButton_Click"/>
-        <Label x:Name="label" Content="Change №" HorizontalAlignment="Left" Height="34" Margin="48,211,0,0" VerticalAlignment="Top" Width="67"/>
-        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="21" Margin="115,211,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="22"/>
+        <Button x:Name="displayContactButton" Content="Display contact" HorizontalAlignment="Left" Height="23" Margin="48,207,0,0" VerticalAlignment="Top" Width="97" Click="displayContactButton_Click"/>
+        <Button x:Name="editContactButton" Content="Edit contact" HorizontalAlignment="Left" Height="23" Margin="48,242,0,0" VerticalAlignment="Top" Width="97" Click="editContactButton_Click"/>
+        <Button x:Name="deleteContactButton" Content="Delete contact" HorizontalAlignment="Left" Height="23" Margin="48,277,0,0" VerticalAlignment="Top" Width="97" Click="deleteContactButton_Click"/>
+        <Label x:Name="label" Content="Selected contact №" HorizontalAlignment="Left" Height="34" Margin="27,174,0,0" VerticalAlignment="Top" Width="113"/>
+        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="21" Margin="140,176,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="30" TextChanged="textBox1_TextChanged" MaxLength="3"/>
+
 
 
     </Grid>

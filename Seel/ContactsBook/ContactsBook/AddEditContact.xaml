@@ -5,12 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContactsBook"
         mc:Ignorable="d"
-        Title="AddEditContact" Height="300" Width="300">
-    <Grid>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="46,25,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="171"/>
-        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="23" Margin="46,59,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="171"/>
-        <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="23" Margin="46,95,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="171"/>
-        <Button x:Name="button" Content="Add new" HorizontalAlignment="Left" Height="55" Margin="54,139,0,0" VerticalAlignment="Top" Width="149" Click="button_Click"/>
-        <Button x:Name="button1" Content="Edit contact" HorizontalAlignment="Left" Height="55" Margin="54,199,0,0" VerticalAlignment="Top" Width="149" Click="button1_Click"/>
+        Title="AddEditContact" Height="291" Width="333">
+    <Grid Margin="-6,0,0,0">
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="135,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171" AutomationProperties.HelpText="Lalala" TextChanged="textBox_TextChanged"/>
+        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="23" Margin="135,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171" TextChanged="textBox1_TextChanged"/>
+        <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="65" Margin="135,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171" MaxLength="254"/>
+        <Button x:Name="button" Content="Add new" HorizontalAlignment="Left" Height="55" Margin="94,179,0,0" VerticalAlignment="Top" Width="149" Click="button_Click" Visibility="Hidden" IsEnabled="False"/>
+        <Button x:Name="button1" Content="Edit contact" HorizontalAlignment="Left" Height="55" Margin="94,179,0,0" VerticalAlignment="Top" Width="149" Click="button1_Click" Visibility="Hidden" IsEnabled="False"/>
+        <Label x:Name="label" Content="Contact name:" HorizontalAlignment="Left" Margin="35,25,0,0" VerticalAlignment="Top" Width="90"/>
+        <Label x:Name="label_Copy" Content="Contact number:" HorizontalAlignment="Left" Margin="35,59,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="label_Copy1" Content="Comment:" HorizontalAlignment="Left" Margin="35,95,0,0" VerticalAlignment="Top" Width="90"/>
     </Grid>
 </Window>

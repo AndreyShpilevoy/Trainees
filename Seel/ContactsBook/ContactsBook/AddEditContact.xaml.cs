@@ -20,6 +20,7 @@ namespace ContactsBook
 	{
 		private ContactsBookBL _contactsBook;
 		private int _editContactIndex;
+		private MainWindow _mainWindow;
 
 		internal AddEditContact()
 		{
@@ -30,27 +31,68 @@ namespace ContactsBook
 		{
 			InitializeComponent();
 			_contactsBook = contactsBook;
-
 		}
 
-		internal AddEditContact(ContactsBookBL contactsBook, int editContactIndex)
+		internal AddEditContact(ContactsBookBL contactsBook, MainWindow mainWindow)
+		{
+			InitializeComponent();
+			_contactsBook = contactsBook;
+			_mainWindow = mainWindow;
+		}
+
+		internal AddEditContact(ContactsBookBL contactsBook, int editContactIndex, MainWindow mainWindow)
 		{
 			InitializeComponent();
 			_contactsBook = contactsBook;
 			_editContactIndex = editContactIndex;
-
+			_mainWindow = mainWindow;
 		}
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
 			_contactsBook.AddNewContact(textBox.Text, textBox1.Text, textBox2.Text);
 			Close();
+			_mainWindow.DisplayInfoFromFile();
 		}
 
 		private void button1_Click(object sender, RoutedEventArgs e)
 		{
-			button1.Visibility = System.Windows.Visibility.Visible;
-			_contactsBook.Edit(_editContactIndex - 1, textBox1.Text, textBox1.Text, textBox2.Text);
+			_contactsBook.Edit(_editContactIndex - 1, textBox.Text, textBox1.Text, textBox2.Text);
+			Close();
+			_mainWindow.DisplayInfoFromFile();	
+		}
+
+		private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			ContactModel contactNew = new ContactModel(textBox.Text, textBox1.Text, textBox2.Text);
+
+			if (contactNew.Validation())
+			{
+				button.IsEnabled = true;
+				button1.IsEnabled = true;
+			}
+			else
+			{
+				button.IsEnabled = false;
+				button1.IsEnabled = false;
+			}			
+		}
+
+		private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			ContactModel contactNew = new ContactModel(textBox.Text, textBox1.Text, textBox2.Text);
+
+			if (contactNew.Validation())
+			{
+				button.IsEnabled = true;
+				button1.IsEnabled = true;
+			}
+			else
+			{
+				button.IsEnabled = false;
+				button1.IsEnabled = false;
+			}
+
 		}
 	}
 }

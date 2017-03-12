@@ -51,6 +51,18 @@ namespace ContactsBook
 			parsedFile.Add(new ContactModel(name, number, comment));
 		}
 
+		public void DeleteContact(int index)
+		{
+			parsedFile.RemoveAt(index);
+			File.WriteAllText(pathToFile, String.Empty);
+			foreach (ContactModel contact in parsedFile)
+			{
+				File.AppendAllLines(pathToFile, new[] { contact.ContactName + ":"
+					+ contact.ContactNumber + ":"
+					+ contact.ContactComment });
+			}
+		}
+
 		public void Edit(int editableContact, string editableField, string changeTo)
 		{
 			switch (editableField)
@@ -86,6 +98,11 @@ namespace ContactsBook
 					+ contact.ContactNumber + ":"
 					+ contact.ContactComment });
 			}
+		}
+
+		public bool ContainsIndex(int index)
+		{
+			return ((index > 0 && index < parsedFile.Count+1) ? true : false);
 		}
 
 	}
