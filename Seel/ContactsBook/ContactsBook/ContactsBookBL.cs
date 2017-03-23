@@ -1,28 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace ContactsBook
 {
 	internal class ContactsBookBL
 	{
-		string pathToFile;
-		string[] fileContent;
+        string pathToFileXml;
 		List<ContactModel> parsedFile;
 
+		public void XmlSerializeAndWriteToFile()
+		{
+			var serializer = new XmlSerializer(typeof(List<ContactModel>));
+			var streamWriter = new StreamWriter(pathToFileXml);
+			serializer.Serialize(streamWriter, parsedFile);
+			streamWriter.Close();
+		}
+
+		public void XmlDeserializeAndReadFromFile()
+		{
+			var serializer = new XmlSerializer(typeof(List<ContactModel>));
+			var streamReader = new StreamReader(pathToFileXml);
+			parsedFile = (List<ContactModel>)serializer.Deserialize(streamReader);
+			streamReader.Close();
+		}
+
+		public void CheckFile()
+		{
+			if (!File.Exists(pathToFileXml))
+			{
+				parsedFile = null;
+				parsedFile.Add(new ContactModel("Aleksandr", "+79162305724", "Asshole"));
+				XmlSerializeAndWriteToFile();
+			}
+		}
 
 		public ContactsBookBL()
 		{
-			pathToFile = @"..\..\..\PhoneNumbers.txt";
-			CheckFile();
-			fileContent = File.ReadAllLines(pathToFile);
+            pathToFileXml = @"..\..\..\PhoneNumbers.xml";
+            CheckFile();
 			parsedFile = new List<ContactModel>();
-
-			foreach (string line in fileContent)
-			{
-				string[] parsedLine = line.Split(':');
-				parsedFile.Add(new ContactModel(parsedLine[0], parsedLine[1], parsedLine[2]));
-			}
+			XmlDeserializeAndReadFromFile();
 		}
 
 		public List<ContactModel> GetFileContent()
@@ -35,32 +55,16 @@ namespace ContactsBook
 			return parsedFile[index];
 		}
 
-		public void CheckFile()
-		{
-			if (!File.Exists(pathToFile))
-			{
-				File.AppendAllLines(pathToFile, new[] { "Aleksandr:+79162305724:Asshole" });
-			}
-			var fileContent = File.ReadAllText(pathToFile);
-			File.WriteAllText(pathToFile, fileContent);
-		}
-
 		public void AddNewContact(string name, string number, string comment)
 		{
-			File.AppendAllLines(pathToFile, new[] { name + ":" + number + ":" + comment });
 			parsedFile.Add(new ContactModel(name, number, comment));
+			XmlSerializeAndWriteToFile();
 		}
 
 		public void DeleteContact(int index)
 		{
 			parsedFile.RemoveAt(index);
-			File.WriteAllText(pathToFile, String.Empty);
-			foreach (ContactModel contact in parsedFile)
-			{
-				File.AppendAllLines(pathToFile, new[] { contact.ContactName + ":"
-					+ contact.ContactNumber + ":"
-					+ contact.ContactComment });
-			}
+			XmlSerializeAndWriteToFile();
 		}
 
 		public void Edit(int editableContact, string editableField, string changeTo)
@@ -77,13 +81,7 @@ namespace ContactsBook
 					parsedFile[editableContact].ContactComment = changeTo;
 					break;
 			}
-			File.WriteAllText(pathToFile, String.Empty);
-			foreach (ContactModel contact in parsedFile)
-			{
-				File.AppendAllLines(pathToFile, new[] { contact.ContactName + ":" 
-					+ contact.ContactNumber + ":" 
-					+ contact.ContactComment });
-			}
+			XmlSerializeAndWriteToFile();
 		}
 
 		public void Edit(int editableContact, string newName, string newNumber, string newComment )
@@ -91,19 +89,15 @@ namespace ContactsBook
 			parsedFile[editableContact].ContactName = newName;
 			parsedFile[editableContact].ContactNumber = newNumber;
 			parsedFile[editableContact].ContactComment = newComment;
-			File.WriteAllText(pathToFile, String.Empty);
-			foreach (ContactModel contact in parsedFile)
-			{
-				File.AppendAllLines(pathToFile, new[] { contact.ContactName + ":"
-					+ contact.ContactNumber + ":"
-					+ contact.ContactComment });
-			}
+			XmlSerializeAndWriteToFile();
 		}
 
 		public bool ContainsIndex(int index)
 		{
 			return ((index > 0 && index < parsedFile.Count+1) ? true : false);
 		}
-
 	}
+
+
 }
+

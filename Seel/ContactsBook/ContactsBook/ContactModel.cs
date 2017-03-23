@@ -5,11 +5,18 @@ using System.Text;
 
 namespace ContactsBook
 {
-	internal class ContactModel
+	public class ContactModel
 	{
 		private string _contactName;
 		private string _contactNumber;
 		private string _contactComment;
+
+        public ContactModel()
+        {
+            _contactName = String.Empty;
+            _contactNumber = String.Empty;
+            _contactComment = String.Empty;
+        }
 
 		public ContactModel(string incomingName, string incomingNumber, string incomingComment)
 		{
@@ -33,7 +40,7 @@ namespace ContactsBook
 			}
 			set
 			{
-				if (value.IndexOf(":") == -1 && value != String.Empty)
+				if (value != String.Empty)
 				{
 					_contactName = value;
 				}
@@ -52,7 +59,7 @@ namespace ContactsBook
 			}
 			set
 			{
-				if (value.IndexOf(":") == -1 && !value.Any(char.IsLetter) && value != String.Empty)
+				if (!value.Any(char.IsLetter) && value != String.Empty)
 				{
 					_contactNumber = value;
 				}
@@ -71,14 +78,7 @@ namespace ContactsBook
 			}
 			set
 			{
-				if (value.IndexOf(":") == -1)
-				{
-					_contactComment = value;
-				}
-				else
-				{
-					_contactComment = value.Replace(":", "-");
-				}
+				_contactComment = value;				
 			}
 		}
 

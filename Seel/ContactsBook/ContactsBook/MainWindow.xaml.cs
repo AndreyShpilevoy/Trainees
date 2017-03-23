@@ -93,6 +93,10 @@ namespace ContactsBook
 			AddEditContact addEditContact = new AddEditContact(contactBookBl);
 			contactBookBl.DeleteContact(Int32.Parse(textBox1.Text)-1);
 			DisplayInfoFromFile();
+            if (Int32.Parse(textBox1.Text) > contactBookBl.GetFileContent().Count)
+            {
+                textBox1.Text = contactBookBl.GetFileContent().Count.ToString();
+            }
 		}
 	}
 }

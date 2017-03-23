@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfContactModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ContactModel>
+    <ContactName>wadasd</ContactName>
+    <ContactNumber>13212</ContactNumber>
+    <ContactComment>asdasd</ContactComment>
+  </ContactModel>
+  <ContactModel>
+    <ContactName>Andrey</ContactName>
+    <ContactNumber>45646464654</ContactNumber>
+    <ContactComment>f</ContactComment>
+  </ContactModel>
+</ArrayOfContactModel>
