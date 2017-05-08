@@ -1,0 +1,51 @@
+﻿@model MeetWagonMVC4.Models.WagonDetailsResponse
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Wagon</legend>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => Model.Wagon.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => Model.Wagon.Name)
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => Model.Wagon.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => Model.Wagon.Description)
+    </div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => Model.Wagon.DateAdded)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => Model.Wagon.DateAdded)
+    </div>
+
+    <p>@Model.FbLikeButtonData</p>
+
+    <h5>Wagoneers</h5>
+    <ul>
+        @foreach (var userProfile in Model.Wagon.UserProfiles)
+        {
+            <li>@userProfile.UserName</li>
+        }
+    </ul>
+
+</fieldset>
+<p>
+    @Html.ActionLink("Join", "Join", new { id = Model.Wagon.WagonId }) |
+    @Html.ActionLink("Back to List", "Index")
+    @if(User.IsInRole("Administrator"))
+    {
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Wagon.WagonId })
+    }
+</p>

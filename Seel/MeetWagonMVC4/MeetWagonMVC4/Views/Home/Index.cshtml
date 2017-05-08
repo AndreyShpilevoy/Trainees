@@ -1,0 +1,15 @@
+﻿@model IEnumerable<MeetWagonMVC4.Models.Wagon>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h3>Most Popular Meet Wagons:</h3>
+<ol>
+    @foreach (var wagon in Model)
+    {
+    <li>
+        <h5>@wagon.Name</h5>
+        @wagon.Description
+    </li>
+    }
+</ol>
